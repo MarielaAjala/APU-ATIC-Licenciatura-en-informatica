@@ -1,0 +1,81 @@
+programa TP2Ej2_3Escaleras_FINAL
+procesos
+  proceso juntarFlores(ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso juntarPapeles(ES papeles: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso escalon (ES f: numero; ES p:numero)
+  variables
+    altura:numero
+  comenzar
+    Random(altura,1,5)
+    f:=0
+    p:=0
+    repetir (altura)
+      juntarFlores(f)
+      juntarPapeles(p)
+      mover
+    derecha
+    juntarFlores(f)
+    juntarPapeles(p)
+    mover
+    repetir 3
+      derecha
+  fin
+  proceso escalera (ES cant:numero)
+  variables
+    f,p:numero
+  comenzar
+    cant:=0
+    repetir 4
+      escalon(f,p)
+      si(f>p)
+        cant:=cant+1
+  fin
+areas
+  escalera1: AreaP (2,1,6,21) 
+  escalera2: AreaP (7,1,11,21)
+  escalera3: AreaP (12,1,16,21)
+  areaFiscal: AreaP (1,1,1,1)
+robots
+  robot juntador
+  variables
+    cant:numero
+  comenzar
+    cant:=0
+    escalera(cant)
+    EnviarMensaje(cant,fiscalizador)   
+  fin
+  robot fiscalizador
+  variables
+    cantidad1,cantidad2,cantidad3:numero
+    total:numero
+  comenzar
+    total:=0
+    RecibirMensaje(cantidad1,robot1)  
+    RecibirMensaje(cantidad2,robot2)
+    RecibirMensaje(cantidad3,robot3)
+    total:=total+cantidad1+cantidad2+cantidad3
+    Informar(total)
+  fin
+variables
+  robot1,robot2,robot3:juntador
+  fiscalizador: fiscalizador
+comenzar
+  AsignarArea(robot1,escalera1)
+  AsignarArea(robot2,escalera2)
+  AsignarArea(robot3,escalera3)
+  AsignarArea(fiscalizador,areaFiscal)
+  Iniciar(robot1,2,1)
+  Iniciar(robot2,7,1)
+  Iniciar(robot3,12,1)
+  Iniciar(fiscalizador,1,1)
+fin

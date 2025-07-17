@@ -1,0 +1,59 @@
+programa TP2Ej1_competenciaJuntarFlores
+procesos
+  proceso juntarFlores(ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso recorrido (E cuadras: numero; ES f: numero)
+  comenzar
+    repetir (cuadras-1)
+      juntarFlores(f)
+      mover
+    juntarFlores(f)
+  fin
+  proceso competir(ES mias:numero)
+  variables
+    cantCuadras:numero
+  comenzar
+    mias:=0
+    cantCuadras:=10
+    recorrido(cantCuadras,mias)
+  fin
+areas
+  avenida1_1a10: AreaP (1,1,1,10)
+  avenida2_11a20: AreaP (2,11,2,20)
+robots
+  robot competidor1
+  variables
+    flores,f:numero
+  comenzar
+    flores:=0
+    recorrido(10,flores)
+    RecibirMensaje(f,robot2)
+    EnviarMensaje(flores,robot2)
+    si(flores >= f)
+      Informar(flores-f)    
+  fin
+  robot competidor2
+  variables
+    flores,f:numero
+  comenzar
+    flores:=0
+    recorrido(10,flores)
+    EnviarMensaje(flores,robot1)   
+    RecibirMensaje(f,robot1)  
+    si(flores >= f)
+      Informar(flores-f)    
+  fin
+variables
+  robot1: competidor1
+  robot2: competidor2
+comenzar
+  AsignarArea(robot1,avenida1_1a10)
+  AsignarArea(robot2,avenida2_11a20)
+  Iniciar(robot1,1,1)
+  Iniciar(robot2,2,11)
+fin
+

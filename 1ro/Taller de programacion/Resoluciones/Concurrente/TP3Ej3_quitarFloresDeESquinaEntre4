@@ -1,0 +1,124 @@
+programa TP3Ej3_quitarFloresDeESquinaEntre4
+procesos
+  proceso colaborar (ES hay: boolean; E avenida: numero; E calle: numero)
+  variables
+    aveOrigen,calleOrigen: numero
+  comenzar
+    aveOrigen:= PosAv
+    calleOrigen:= PosCa
+    BloquearEsquina (avenida,calle)
+    Pos (avenida,calle)
+    si HayFlorEnLaEsquina
+      tomarFlor
+      hay:= V
+    sino
+      hay:=F
+    Pos (aveOrigen,calleOrigen)
+    LiberarEsquina (avenida,calle)
+  fin
+areas
+  areaCompetencia: AreaPC (2,2,10,10)
+  areaJefe: AreaP (1,1,1,1)
+  areaRobot1: AreaP (2,1,2,1)
+  areaRobot2: AreaP (3,1,3,1)
+  areaRobot3: AreaP (4,1,4,1)
+  areaRobot4: AreaP (5,1,5,1)
+robots
+  robot tipoCompetidor
+  variables
+    f,quienSoy,calle,avenida,aveOrigen,calleOrigen: numero
+    continuaCompetencia,hayFlor: boolean
+  comenzar
+    RecibirMensaje (avenida,jefe)
+    RecibirMensaje (calle,jefe)
+    colaborar (hayFlor,avenida,calle)
+    EnviarMensaje(hayFlor,jefe)
+    RecibirMensaje (quienSoy,jefe)
+    mientras (hayFlor)   
+      EnviarMensaje(quienSoy, jefe)
+      colaborar (hayFlor,avenida,calle) 
+      EnviarMensaje(hayFlor,jefe)
+      {LiberarEsquina (avenida,calle)}
+    EnviarMensaje(quienSoy, jefe) {PARA CUANDO NO HAYA FLORES SE ENTERE EL JEFE}
+    EnviarMensaje(hayFlor,jefe) {Y ASI JEFE CORTE SU BUCLE}
+    {LiberarEsquina (avenida,calle)}
+  fin
+  robot tipoJefe
+  variables
+    cant1,cant2,cant3,cant4,avenida,calle,quien,ganador:numero
+    hayFlor: boolean
+  comenzar
+    cant1:=0
+    cant2:=0
+    cant3:=0
+    cant4:=0
+    Random (avenida,2,10)
+    Random (calle,2,10)
+    EnviarMensaje (avenida,robot1)
+    EnviarMensaje (avenida,robot2)
+    EnviarMensaje (avenida,robot3)
+    EnviarMensaje (avenida,robot4)
+    EnviarMensaje (calle,robot1)
+    EnviarMensaje (calle,robot2)
+    EnviarMensaje (calle,robot3)
+    EnviarMensaje (calle,robot4)
+    RecibirMensaje (hayFlor,*)
+    EnviarMensaje (1,robot1)
+    EnviarMensaje (2,robot2)
+    EnviarMensaje (3,robot3)
+    EnviarMensaje (4,robot4)
+    mientras (hayFlor)  
+      RecibirMensaje (quien,*)
+      si (quien = 1)
+        cant1:=cant1+1
+      sino
+        si (quien = 2)
+          cant2:=cant2+1
+        sino
+          si (quien=3)
+            cant3:=cant3+1
+          sino
+            cant4:=cant4+1
+      RecibirMensaje (hayFlor,*)
+    si (cant1>cant2)&(cant1>cant3)&(cant1>cant4)
+      ganador:=1
+    sino
+      si (cant2>cant3)&(cant2>cant4)
+        ganador:=2
+      sino
+        si (cant3>cant4)
+          ganador:=3
+        sino
+          si (cant4>cant1)&(cant4>cant2)&(cant4>cant3)
+            ganador:=4
+          sino 
+            si (cant4=cant1)|(cant4=cant2)|(cant4=cant3)
+              ganador:=00
+              Informar ('Hay_empate_ganador_robot_',ganador)
+    Informar ('Avenida_',avenida)
+    Informar ('Calle_',calle)
+    Informar ('Recolectadas_por_robot1_',cant1)
+    Informar ('Recolectadas_por_robot2_',cant2)
+    Informar ('Recolectadas_por_robot3_',cant3)
+    Informar ('Recolectadas_por_robot4_',cant4)
+    Informar ('Ganador_robot_numero_',ganador)
+  fin
+variables
+  robot1,robot2,robot3,robot4: tipoCompetidor
+  jefe: tipoJefe
+comenzar
+  AsignarArea (robot1,areaCompetencia )
+  AsignarArea (robot2, areaCompetencia)
+  AsignarArea (robot3, areaCompetencia)
+  AsignarArea (robot4, areaCompetencia)
+  AsignarArea (robot1, areaRobot1)
+  AsignarArea (robot2, areaRobot2)
+  AsignarArea (robot3, areaRobot3)
+  AsignarArea (robot4, areaRobot4)
+  AsignarArea (jefe, areaJefe)
+  Iniciar (jefe, 1,1 )
+  Iniciar (robot1, 2,1 )
+  Iniciar (robot2, 3,1 )
+  Iniciar (robot3, 4,1 )
+  Iniciar (robot4, 5,1 )
+fin

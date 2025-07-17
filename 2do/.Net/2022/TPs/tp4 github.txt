@@ -1,0 +1,594 @@
+EJERCICIO 1 2 3
+
+
+class Program
+    {
+        static void Main(string[] args)
+        {
+            Persona p = new Persona();
+            p.Imprimir();
+            Console.ReadKey();
+
+        }
+        class Persona
+        {
+            private String Nombre;
+            private Int16 Edad;
+
+            private int Dni;
+
+
+            public Persona(){
+                Console.WriteLine("Ingrese sus datos");
+                String str1 = Console.ReadLine();
+                String[] str2=str1.Split(',');
+
+                Console.WriteLine(str2.Length);
+                if(str2.Length == 3){
+                    this.Nombre = str2[0];
+                    this.Edad = Int16.Parse(str2[1]);
+                    this.Dni = int.Parse(str2[2]);
+                }
+                else
+                {
+                    Console.WriteLine("Error en la carga de datos");
+                }
+            }
+            public Boolean esMayorQue(Persona p){
+                return(this.Edad > p.Edad);
+            }
+            public override String ToString(){
+                return this.Nombre +"   "+ this.Dni +"   " + this.Edad;
+            }
+
+            public void Imprimir(){
+                Console.WriteLine(this.ToString());
+            }
+        }
+    }
+
+
+
+EJERCICIO 4 
+============
+
+
+
+ static void Main(string[] args)
+        {
+           
+           Hora h = new Hora(23,54,23);
+           h.Imprimir();
+            Console.ReadKey();
+
+        }
+        
+
+        class Hora {
+            private int Horas,Minutos,Segundos;
+            public Hora (int horas, int minutos , int segundos){
+                this.Horas = horas;
+                this.Minutos = minutos;
+                this.Segundos = segundos;
+            }
+
+            public void Imprimir (){
+                Console.WriteLine(Horas + "    horas,   " + Minutos + "    minutos,   " +  Segundos + "    sesgundos. " );
+            }
+        }
+        
+        
+EJERCICIO 6
+
+============
+
+
+class Ecuacion2{
+            private int a,b,c;
+            public Ecuacion2 (int a,int b, int c){
+                this.a=a;
+                this.b=b;
+                this.c=c;
+            }
+
+            public double GetDiscriminante(){
+                return Math.Pow(b,2) -4*a*c;
+            }
+
+            public Int16 GetCantidadRaices(){
+                if(GetDiscriminante() < 0){
+                    return 0;
+                }
+                if(GetDiscriminante() == 0){
+                    return 1;
+                }
+               
+                return 2;
+                
+            }
+
+            public void ImprimirRaices(){
+                if(GetDiscriminante() < 0){
+                    Console.WriteLine("La ecuacion no tiene ninguna raiz");
+                }
+                if(GetDiscriminante() == 0){
+                    Console.Write("La ecuacion tiene una unica solución y es : x = ");
+                    Console.WriteLine(-((double)b)/(2*(double)a));
+                }
+               if(GetDiscriminante() > 0){
+                    Console.Write("La ecuacion tiene dos soluciones x1 = ");
+                  //  Console.WriteLine(Math.Pow(b,2));
+                   // Console.WriteLine(4*a*c);
+                   // Console.WriteLine(Math.Sqrt(Math.Pow(b,2)- 4*a*c));
+                    Console.WriteLine((-b+ Math.Sqrt(Math.Pow(b,2)- 4*a*c))/(2*a));
+                    Console.Write(" y  x2 = ");
+                    Console.WriteLine((-b - Math.Sqrt(Math.Pow(b,2)- 4*a*c))/(2*a));
+                    
+                }
+            }
+        }
+        
+        
+EJERCICIO 7 
+==============
+
+
+
+static void Main(string[] args)
+        {
+           
+            Nodo n = new Nodo(7);
+            n.Insertar(8);
+            n.Insertar(10);
+            n.Insertar(3);
+            n.Insertar(1);
+            n.Insertar(5);
+            n.Insertar(14);
+            foreach (int i in n.GetInOrder())
+            {
+            Console.Write(i + " ");
+            }
+            Console.WriteLine();
+            Console.WriteLine(n.GetAltura());
+            Console.WriteLine(n.GetCantNodos());
+            Console.WriteLine(n.GetValorMaximo());
+            Console.WriteLine(n.GetValorMinimo());
+            Console.ReadKey();
+
+        }
+        
+
+        class Nodo {
+            private int valor;
+            private Nodo hijoIzquierdo=null;
+            private Nodo hijoDerecho=null;
+
+            public Nodo(int n){
+                this.valor=n;
+            }
+
+            public Boolean Insertar (int n){
+                if(n == valor)
+                {
+                    Console.WriteLine("El valor ingresado ya está dentro del arbol");
+                    return false;
+                }
+                if(n>valor){
+                    if(hijoDerecho != null)
+                    {
+                       return hijoDerecho.Insertar(n);
+                    }
+                    else
+                    {
+                        hijoDerecho = new Nodo(n);
+                        return true;
+                    }
+                }
+                else
+                {
+                    if(hijoIzquierdo != null)
+                    {
+                       return hijoIzquierdo.Insertar(n);
+                    }
+                    else
+                    {
+                        hijoIzquierdo = new Nodo(n);
+                        return true;
+                    }
+                }
+            }
+
+
+            public ArrayList GetInOrder(){
+                    ArrayList l = new ArrayList();
+                    GetInOrder(l);
+                    return l;
+
+            }
+
+            private void GetInOrder (ArrayList l)
+            {
+                if(hijoIzquierdo!= null)
+                {
+                    hijoIzquierdo.GetInOrder(l);
+                }
+
+                l.Add(this.valor);
+                if(hijoDerecho != null)
+                {
+                    hijoDerecho.GetInOrder(l);
+                }
+            }
+
+            public int GetAltura(){
+                int x=0;
+                GetAltura(ref x,0);
+                return x;
+            }
+            private void GetAltura(ref int n,int k){
+                if(n < k) {
+                    n=k;
+                }
+                if(hijoIzquierdo!=null)
+                {
+                    hijoIzquierdo.GetAltura(ref n,k+1);
+                }
+                if(hijoDerecho!= null)
+                {
+                    hijoDerecho.GetAltura(ref n,k+1);
+                }
+            }
+
+
+            public int GetCantNodos()
+            {
+                int x = 0;
+                GetCantNodos(ref x);
+                return x;
+            }
+            private void GetCantNodos(ref int n)
+            {
+                n++;
+                if(hijoIzquierdo != null){
+                    hijoIzquierdo.GetCantNodos(ref n);
+                }  
+                if(hijoDerecho != null)
+                {
+                    hijoDerecho.GetCantNodos (ref n);
+                }
+            }
+
+            public int GetValorMaximo ()
+            {
+                if(hijoDerecho!= null)
+                {
+                    return hijoDerecho.GetValorMaximo();
+                }
+                else
+                {
+                    return valor;
+                }
+            }
+
+            public int GetValorMinimo ()
+            {
+                if(hijoIzquierdo!= null)
+                {
+                    return hijoIzquierdo.GetValorMinimo();
+                }
+                else
+                {
+                    return valor;
+                }
+            }
+           
+        }
+        
+        
+        ==================================================================================================================
+        
+        EJERCICIO 8
+        
+        ====================================================================================================================
+        
+        static void Main(string[] args)
+        
+        {
+            Matriz A = new Matriz(2, 3);
+            for (int i = 0; i < 6; i++) A.SetElemento(i / 3, i % 3, (i + 1) / 3.0);
+            Console.WriteLine("Impresión de la matriz A");
+            A.Imprimir("0.000");
+            double[,] aux = new double[,] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+            Matriz B = new Matriz(aux);
+            Console.WriteLine("\nImpresión de la matriz B");
+            B.Imprimir();
+            Console.WriteLine("\nAcceso al elemento B[1,2]={0}", B.GetElemento(1, 2));
+            Console.Write("\nfila 1 de A: ");
+            foreach (double d in A.GetFila(1)) Console.Write("{0:0.0} ", d);
+            Console.Write("\n\nColumna 0 de B: ");
+            foreach (double d in B.GetColumna(0)) Console.Write("{0} ", d);
+            Console.Write("\n\nDiagonal principal de B: ");
+            foreach (double d in B.GetDiagonalPrincipal()) Console.Write("{0} ", d);
+            Console.Write("\n\nDiagonal secundaria de B: ");
+            foreach (double d in B.GetDiagonalSecundaria()) Console.Write("{0} ", d);
+            A.MultiplicarPor(B);
+            Console.WriteLine("\n\nA multiplicado por B");
+            A.Imprimir();
+
+            Console.ReadKey();
+        }
+
+        class Matriz {
+            
+           double[,] matriz;
+            public Matriz(int filas, int columnas){
+                this.matriz = new double [filas,columnas];
+            }
+            public Matriz (double[,] matriz){
+                
+                this.matriz=matriz; //se usa la misma matriz que en el programa principal no se instancia otra diferente debo tener cuidado de no modificar la matriz en el programa principal ya que los cambios tambien se verán reflejados dentro de mi clase matriz
+            }
+
+            public bool SetElemento(int fila, int columna, double elemento){
+                if((fila < matriz.GetLength(0) ) && (columna < matriz.GetLength(1)))
+                {
+                    this.matriz[fila,columna]= elemento;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            public double? GetElemento(int fila, int columna){
+                if((fila < matriz.GetLength(0) ) && (columna < matriz.GetLength(1))){
+                    return this.matriz[fila,columna];
+                }
+                else
+                {
+                    return null;
+                }
+                
+            }
+
+            public void Imprimir(){
+                for(int i=0;i<matriz.GetLength(0);i++){
+                    for(int j=0;j<matriz.GetLength(1);j++){
+                        Console.Write(matriz[i,j]);
+                        Console.Write("\t");
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+            public void Imprimir(string formatString){
+                for(int i=0;i<matriz.GetLength(0);i++){
+                    for(int j=0;j<matriz.GetLength(1);j++){
+                        Console.Write(matriz[i, j].ToString(formatString));
+                        Console.Write("\t"); 
+                    }
+                    Console.WriteLine();
+                }
+            }
+            public double[] GetFila(int fila){
+                double[] vectorFila=null;
+                if(fila < matriz.GetLength(0)) {
+                        vectorFila = new double[matriz.GetLength(1)];
+                        for(int i=0;i<matriz.GetLength(1);i++){
+                            vectorFila[i]= matriz[fila,i];
+                        }
+                    }
+                    return vectorFila;
+
+            }
+
+            public double[] GetColumna(int columna){
+                double[] vectorColumna = null;
+                if(columna < matriz.GetLength(1)){
+                    vectorColumna = new double[matriz.GetLength(0)];
+                    for(int i=0;i<matriz.GetLength(0);i++){
+                        vectorColumna[i]= matriz[i,columna];
+                    }
+                }
+                return vectorColumna;
+            }
+
+            public double[] GetDiagonalPrincipal(){
+                 double[] vectorDiagonalPrincipal = null;
+                 if(matriz.GetLength(0) == matriz.GetLength(1))
+                 {
+                     vectorDiagonalPrincipal = new double[matriz.GetLength(0)];
+                     for(int i=0; i< matriz.GetLength(0);i++)
+                     {
+                         vectorDiagonalPrincipal[i]= matriz[i,i];
+                     }
+                 }
+                 return vectorDiagonalPrincipal;
+            }
+
+            public double[] GetDiagonalSecundaria(){
+                double[] vectorDiagonalSecundaria = null;
+                 if(matriz.GetLength(0) == matriz.GetLength(1))
+                 {
+                     vectorDiagonalSecundaria = new double[matriz.GetLength(0)];
+                     for(int i=0; i< matriz.GetLength(0);i++)
+                     {
+                         vectorDiagonalSecundaria[i]= matriz[i,matriz.GetLength(0) -1 -i];
+                     }
+                 }
+                 return vectorDiagonalSecundaria;
+            }
+
+            public double[][] GetArregloDeArreglo (){
+                double[][] arregloDeArreglo=new double[matriz.GetLength(0)][];
+                for (int f=0;f<matriz.GetLength(0);f++){
+                    arregloDeArreglo[f]= new double[matriz.GetLength(1)];
+                }
+                for(int i=0;i<matriz.GetLength(0);i++){
+                    for(int j=0;j< matriz.GetLength(1);j++){
+                        arregloDeArreglo[i][j]=matriz[i,j];
+                    }
+                }
+                return arregloDeArreglo;
+
+            }
+
+            public bool Sumarle (Matriz m){
+                if((m.GetFila(0).Length == this.matriz.GetLength(1)) && (m.GetColumna(0).Length == this.matriz.GetLength(0)))
+                {
+                    for(int i=0; i< this.matriz.GetLength(0);i++){
+                        for(int j=0;j<matriz.GetLength(1);j++){
+                            this.matriz[i,j]+= (double)m.GetElemento(i,j);
+                        }
+                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            public bool Restarle (Matriz m){
+                if((m.GetFila(0).Length == this.matriz.GetLength(1)) && (m.GetColumna(0).Length == this.matriz.GetLength(0)))
+                {
+                    for(int i=0; i< this.matriz.GetLength(0);i++){
+                        for(int j=0;j<matriz.GetLength(1);j++){
+                            this.matriz[i,j]-= (double)m.GetElemento(i,j);
+                        }
+                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            public void MultiplicarPor(Matriz m){
+                
+                if(this.matriz.GetLength(1)== m.GetColumna(0).Length){
+                     double [,] matrizResultante = new double [this.matriz.GetLength(0),m.GetFila(0).Length];
+                     for(int i=0;i<this.matriz.GetLength(0);i++){
+                         for(int j=0;j<m.GetFila(0).Length;j++)
+                         {
+                             double aux=0;
+                             double[] filaA= GetFila(i);
+                             double[] columnaB= m.GetColumna(j);
+                             for(int k=0; k<filaA.Length;k++){
+                                aux+=filaA[k]*columnaB[k];
+                             }
+                             matrizResultante[i,j]=aux;
+                         }
+                     }
+                     this.matriz = matrizResultante;
+                }
+                
+            }
+                   
+
+        }
+        
+             
+           
+    }
+    
+    
+    
+    
+    EJERCICIO 9 =================================================================================================================
+    
+    si se instancia afuera con static se le pone el valor null por defecto en cambio adentro del main como que no (preguntar en clase de consulta);
+
+
+  EJERCICIO 10 =================================================================================================================
+  
+            para lograr la sobrecarga si o si debemos de pasar distintos parametros no sirve con que devuelvan cosas diferentes
+            
+            
+            
+  EJERCICIO 11 =================================================================================================================         
+            dynamic d1: 5 dynamic d2:5
+            entero: 5 objeto:5
+            entero: 5 objeto:5
+            dynamic d1: 5 dynamic d2:5
+            entero: 5 objeto:5
+            
+            
+   EJERCICIO 12 =========================================================================================================================
+   
+   
+   class Program1
+        {
+            
+            static void Main() {
+                Cuenta cuenta = new Cuenta();
+                cuenta.Imprimir();
+                cuenta = new Cuenta(30222111);
+                cuenta.Imprimir();
+                cuenta = new Cuenta("José Perez");
+                cuenta.Imprimir();
+                cuenta = new Cuenta("Maria Diaz", 20287544);
+                cuenta.Imprimir();
+                cuenta.Depositar(200);
+                cuenta.Imprimir();
+                cuenta.Extraer(150);
+                cuenta.Imprimir();
+                cuenta.Extraer(1500);
+                Console.ReadKey();
+            }
+            class Cuenta {
+                private double _monto;
+                private int _titularDNI;
+                private string _titularNombre;
+                public Cuenta(){
+                    this._titularDNI= -1 ;
+                    this._titularNombre = "No especificado";
+                    this._monto = 0;  
+                }
+                public Cuenta (String s, int n){
+                    this._titularDNI= n;
+                    this._titularNombre = s;
+                    this._monto = 0;
+                }
+                public Cuenta(String s):this(){
+                    this._titularNombre = s;
+                }
+                public Cuenta(int n):this(){
+                    this._titularDNI= n;
+                }
+                public void Imprimir (){
+                    if(_titularDNI == -1){
+                        Console.WriteLine($"Nombre: {this._titularNombre}, DNI : No especificado, Monto: {this._monto}");
+                    }
+                    else{
+                        Console.WriteLine($"Nombre: {this._titularNombre}, DNI : {this._titularDNI}, Monto: {this._monto}");
+                    }
+                    
+                    
+                }
+
+                public void Depositar(double n){
+                    this._monto+=n;
+                }
+                public void Extraer(double n){
+                    if(this._monto - n > 0){
+                        this._monto-= n;
+                    }
+                    else{
+                        Console.WriteLine("Operacion cancelada, monto insuficiente");
+                    }
+                }
+            }
+            
+
+        }
+        
+        
+        
+        
+        EJERCICIO 13======================================================================================================================================
+        
+         st4 = "valor por defecto";
+                st=(st1 ?? (st2 ?? st3)) ?? st4;

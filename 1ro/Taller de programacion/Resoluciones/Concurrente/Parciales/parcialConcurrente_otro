@@ -1,0 +1,91 @@
+programa parcialConcurrente_otro {TURNO C, TEMA 2}
+procesos
+  proceso enviarIds
+  comenzar
+    EnviarMensaje(1,worker1)
+    EnviarMensaje(2,worker2)
+    EnviarMensaje(3,worker3)
+  fin
+  proceso comunicarFinCuadrado(E quien:numero)
+  variables
+    seguir:boolean
+  comenzar
+    si (quien=1)
+      EnviarMensaje(V,worker2)
+      EnviarMensaje(V,worker3)
+    sino
+      si (quien=2)
+        EnviarMensaje(V,worker1)
+        EnviarMensaje(V,worker3)
+      sino
+        EnviarMensaje(V,worker1)
+        EnviarMensaje(V,worker2)
+    repetir 2
+      RecibirMensaje(seguir,*)
+  fin
+  proceso depositarFloresDE_A_UNA(E cantFlores:numero;E aveOrigen:numero; E caOrigen:numero)
+  comenzar
+    repetir cantFlores
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      depositarFlor
+      Pos(aveOrigen,caOrigen)
+      LiberarEsquina(50,50)
+  fin
+  proceso cuadrado(E lado:numero;ES flores:numero)
+  comenzar
+    repetir 4
+      repetir lado
+        mientras HayFlorEnLaEsquina
+          tomarFlor
+          flores:=flores+1
+        mover
+      derecha
+  fin
+  proceso ubicarseParaSigCuadrado(E lado:numero)
+  comenzar
+    Pos(PosAv,PosCa+lado+1)
+  fin
+areas
+  areaWorker1: AreaP (1,1,6,31)
+  areaWorker2: AreaP (8,1,13,31)
+  areaWorker3: AreaP (15,1,20,31)
+  areaCoordinador: AreaP (51,1,51,1)
+  deposito: AreaC (50,50,50,50)
+robots
+  robot tipoWorker
+  variables
+    floresJuntadas,lado,quienSoy,aveOrigen,caOrigen:numero
+  comenzar
+    floresJuntadas:=0
+    RecibirMensaje(quienSoy,coordinador)
+    repetir 5
+      Random(lado,1,5)
+      cuadrado(lado,floresJuntadas)
+      comunicarFinCuadrado(quienSoy)
+      ubicarseParaSigCuadrado(lado)
+    aveOrigen:=PosAv
+    caOrigen:=PosCa
+    depositarFloresDE_A_UNA(floresJuntadas,aveOrigen,caOrigen)
+  fin
+  robot tipoCoordinador
+  comenzar
+    enviarIds
+  fin
+variables
+  worker1,worker2,worker3:tipoWorker
+  coordinador:tipoCoordinador
+comenzar
+  AsignarArea (worker1,areaWorker1)
+  AsignarArea (worker1,deposito)
+  AsignarArea (worker2,areaWorker2)
+  AsignarArea (worker2,deposito)
+  AsignarArea (worker3,areaWorker3)
+  AsignarArea (worker3,deposito)
+  AsignarArea (coordinador,areaCoordinador)
+  AsignarArea (coordinador,deposito)
+  Iniciar (worker1,1,1)
+  Iniciar (worker2,8,1)
+  Iniciar (worker3,15,1)
+  Iniciar (coordinador,51,1)
+fin

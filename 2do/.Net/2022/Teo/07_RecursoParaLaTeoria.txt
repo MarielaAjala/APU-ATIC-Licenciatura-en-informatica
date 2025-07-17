@@ -1,0 +1,54 @@
+----------- Persona.cs ------------
+namespace Teoria7;
+
+class Persona
+{
+   protected string Nombre = "";
+}
+
+
+----------- Empleado.cs ------------
+namespace Teoria7;
+
+class Empleado : Persona
+{
+   public Empleado(string nombre)
+      => Nombre = nombre;
+   public void Imprimir()
+      => Console.WriteLine($"Soy el empleado {Nombre}");
+}
+
+---------- Automotor.cs -----------
+namespace Teoria7;
+
+class Automotor
+{
+   protected string Marca = "";
+}
+
+
+------------- Moto.cs --------------
+namespace Teoria7;
+
+class Moto : Automotor
+{
+   public Moto(string marca)
+      => Marca = marca;
+   public void Imprimir()
+      => Console.WriteLine($"Soy una moto {Marca}");
+}
+
+
+------------- Program.cs --------------
+using Teoria7;
+
+object[] vector = new object[] {
+       new Moto("Zanella"),
+       new Empleado("Juan"),
+       new Moto("Gilera")
+   };
+
+foreach (object o in vector)
+{
+   //completar
+}

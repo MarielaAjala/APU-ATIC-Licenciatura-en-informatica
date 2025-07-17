@@ -1,0 +1,442 @@
+Problema 1: Alquiler de mobiliario
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+
+----------------------------------------------------------------
+
+Problema 2: Posgrado
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+
+
+----------------------------------------------------------------
+
+Problema 3: Contratos
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+
+
+----------------------------------------------------------------
+
+Problema 4: Venta de bebidas
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+
+
+----------------------------------------------------------------
+
+Problema 5: Casa de fotografia
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+
+
+----------------------------------------------------------------
+
+Problema 6: Biblioteca
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+
+
+----------------------------------------------------------------
+
+Problema 7: Mutual
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+
+
+----------------------------------------------------------------
+
+Problema 8: Teatro
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+
+
+----------------------------------------------------------------
+
+Problema 9: Pago electronico
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+
+
+----------------------------------------------------------------
+
+Problema 10: Un aventón
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+
+
+----------------------------------------------------------------
+
+Problema 11: Concursos
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+
+
+----------------------------------------------------------------
+
+Problema 12: Créditos bancarios
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+
+
+----------------------------------------------------------------
+
+Problema 13: Venta de libros
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+
+
+----------------------------------------------------------------
+
+Problema 14: Manejo de tarjetas de crédito
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+
+----------------------------------------------------------------
+
+Problema 15: Manejo de canchas de tenis
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+
+----------------------------------------------------------------
+
+Problema 16: Procesamiento de imágenes
+ID: 
+TÍTULO:
+REGLAS DE NEGOCIO:
+
+
+CRITERIOS DE ACEPTACION:
+Escenario 1: 
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 2:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 3:
+Dado <>,
+Cuando <>,
+Entonces <>.
+Escenario 4:
+Dado <>,
+Cuando <>,
+Entonces <>.
+
+

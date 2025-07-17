@@ -1,0 +1,66 @@
+@page "/agregarcurso"
+@inject ObtenerCursoTituloUseCase ObtenerCursoTituloUseCase
+@inject NavigationManager Navegador;
+@inject AgregarCursoUseCase AgregarCursoUseCase
+@inject IJSRuntime JsRuntime;
+@inject ObtenerListasDeCursosUseCase ObtenerListasDeCursosUseCase
+@using Institucion;
+
+
+@if (_esNuevoCurso)
+{
+   <h3>Agregando un nuevo Curso</h3>
+}
+else
+{
+   <h3>Modificando al Curso "@_curso.Id"</h3>
+}
+<input placeholder="Titulo" @bind="_curso.Titulo" class="form-control">
+<input placeholder="Descripcion" @bind="_curso.Descripcion" class="form-control">
+<input placeholder="Fecha de Inicio" @bind="_curso.FechaDeInicio" class="form-control">
+<input placeholder="Fecha de Fin" @bind="_curso.FechaDeFin" class="form-control">
+<button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+
+@code {
+Curso _curso = new Curso();
+ bool _esNuevoCurso=true;
+ async Task Aceptar()
+ {  
+    if(_curso.Titulo != null){
+            List<Curso> cursos= ObtenerListasDeCursosUseCase.Ejecutar(_curso.Titulo);
+            foreach(var c in cursos){
+                if(c.FechaDeInicio == _curso.FechaDeInicio ){
+                    _esNuevoCurso= false;
+                }
+            }
+            
+    }
+    else {
+        await JsRuntime.InvokeAsync<bool>("confirm","DEBE INGRESAR UN TITULO");
+        Navegador.NavigateTo("listadocursos");    
+    }  
+    if (_esNuevoCurso)
+    {
+        if( _curso.FechaDeInicio <= _curso.FechaDeFin)
+        {
+            if(_curso.FechaDeInicio > DateTime.Now){
+                AgregarCursoUseCase.Ejecutar(_curso);   
+            }
+            else{ await JsRuntime.InvokeAsync<bool>("confirm","EL CURSO NO PUEDE COMENZAR ANTES DE LA FECHA ACTUAL"); }
+        }
+        else
+        {
+            await JsRuntime.InvokeAsync<bool>("confirm","LA FECHA DE INICIO DEBE SER MENOR A LA DE FIN ");   
+        }
+    }
+    else
+    {
+    await JsRuntime.InvokeAsync<bool>("confirm", $"EL CURSO {_curso.Titulo} YA EXISTE ");
+    }
+     _curso = new Curso();
+    Navegador.NavigateTo("listadocursos");
+ }
+
+}
+
+

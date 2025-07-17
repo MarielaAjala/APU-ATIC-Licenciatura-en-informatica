@@ -1,0 +1,140 @@
+programa TP3Ej2_EscalerasEspejo_FINAL
+procesos
+  proceso juntarFlores (ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso juntarPapeles (ES papeles: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso escalon (E longitud: numero; ES flores: numero)
+  comenzar
+    juntarFlores (flores)
+    avanzar(longitud)
+    juntarFlores (flores)
+    derecha
+    avanzar(longitud)
+    izquierda
+  fin
+  proceso avanzar(E longitud:numero)
+  comenzar
+    repetir longitud
+      mover 
+  fin
+  proceso izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+  proceso escalonInverso (E longitud: numero; ES papeles: numero)
+  comenzar
+    juntarPapeles (papeles)
+    avanzar(longitud)
+    juntarPapeles (papeles)
+    izquierda
+    avanzar(longitud)
+    derecha
+  fin
+  proceso escaleraFloresIda(ES longitudEscalon:numero;ES flores:numero)
+  comenzar
+    juntarFlores (flores)
+    repetir 4
+      escalon (longitudEscalon,flores)
+      longitudEscalon := longitudEscalon - 1
+  fin
+  proceso escaleraFloresVuelta(ES longitudEscalon:numero;ES flores:numero)
+  comenzar
+    repetir 4
+      longitudEscalon := longitudEscalon + 1  
+      escalon (longitudEscalon,flores)
+  fin
+  proceso escaleraInversaPapelesIda(ES longitudEscalon:numero;ES papeles:numero)
+  comenzar
+    juntarPapeles (papeles)
+    repetir 4
+      escalonInverso (longitudEscalon,papeles)
+      longitudEscalon := longitudEscalon - 1
+  fin
+  proceso escaleraInversaPapelesVuelta(ES longitudEscalon:numero;ES papeles:numero)
+  comenzar
+    repetir 4
+      longitudEscalon := longitudEscalon + 1  
+      escalonInverso (longitudEscalon,papeles)
+  fin
+areas
+  areaComun: AreaC (16,16,16,16)
+  areaRobot1: AreaPC (1,1,15,30)
+  areaRobot2: AreaP (17,1,31,30)
+robots
+  robot tipo1_Florero
+  variables
+    flores,longitudEscalon:numero
+  comenzar
+    longitudEscalon := 5
+    flores:=0
+    escaleraFloresIda(longitudEscalon,flores)
+    avanzar(longitudEscalon)
+    derecha
+    BloquearEsquina(16,16)
+    mover
+    EnviarMensaje (1,jefe)
+    juntarFlores (flores)
+    Pos(PosAv-1,PosCa)
+    LiberarEsquina(16,16)
+    repetir 2
+      derecha
+    escaleraFloresVuelta(longitudEscalon,flores)
+    EnviarMensaje (V,jefe)
+    Informar ('Flores_',flores)
+  fin
+  robot tipo2_Papelero
+  variables
+    papeles,longitudEscalon:numero
+  comenzar
+    longitudEscalon := 5
+    papeles:=0
+    escaleraInversaPapelesIda(longitudEscalon,papeles)
+    avanzar(longitudEscalon)
+    izquierda
+    BloquearEsquina(16,16)
+    mover
+    EnviarMensaje (2,jefe)
+    juntarPapeles (papeles)
+    Pos(PosAv+1,PosCa)
+    LiberarEsquina(16,16)
+    repetir 2
+      derecha
+    escaleraInversaPapelesVuelta(longitudEscalon,papeles)
+    EnviarMensaje (V,jefe)
+    Informar ('Papeles_',papeles)
+  fin 
+  robot tipoJefe
+  variables
+    ganador,segundo: numero
+    final: boolean
+  comenzar
+    RecibirMensaje(ganador,*)
+    RecibirMensaje (segundo,*)
+    RecibirMensaje (final,*)
+    RecibirMensaje (final,*)
+    Informar ('Primero_en_llegar_al_centro_',ganador)
+  fin
+variables
+  florero: tipo1_Florero
+  papelero: tipo2_Papelero
+  jefe: tipoJefe
+comenzar
+  AsignarArea (florero,areaRobot1)
+  AsignarArea (papelero,areaRobot2)
+  AsignarArea (florero,areaComun)
+  AsignarArea (papelero,areaComun)
+  AsignarArea (jefe,areaRobot1)
+  Iniciar (florero,1,1)
+  Iniciar (papelero,31,1)
+  Iniciar (jefe,15,1)
+fin

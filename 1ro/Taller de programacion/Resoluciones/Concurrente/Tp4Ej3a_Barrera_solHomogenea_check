@@ -1,0 +1,62 @@
+programa Tp4Ej3a_Barrera_solHomogenea_check
+procesos
+  proceso comunicarAlResto(E quienSoy: numero)
+  variables
+    termino:boolean
+  comenzar
+    repetir 2
+      RecibirMensaje(quien,*)
+    si (quienSoy=1)
+      EnviarMensaje(V,papelero2)
+      EnviarMensaje(V,papelero3)
+    sino
+      si (quienSoy=2)
+        EnviarMensaje(V,papelero1)
+        EnviarMensaje(V,papelero3)
+      sino
+        EnviarMensaje(V,papelero1)
+        EnviarMensaje(V,papelero2)
+  fin
+areas
+  areaPapelero1: AreaP (1,1,1,100)
+  areaPapelero2: AreaP (2,1,2,100)
+  areaPapelero3: AreaP (3,1,3,100)
+  areaCoordinador: AreaP (100,100,100,100)
+robots
+  robot tipoCoordinador
+  comenzar
+    EnviarMensaje(1,papelero1)
+    EnviarMensaje(2,papelero2)
+    EnviarMensaje(3,papelero3)
+  fin
+  robot tipoPapelero
+  variables
+    quienSoy:numero
+  comenzar
+    RecibirMensaje(quienSoy,coordinador)
+    repetir 19
+      repetir 5
+        mientras (HayPapelEnLaEsquina)
+          tomarPapel
+        mover
+      comunicarAlResto(quienSoy)
+    repetir 4
+      mientras (HayPapelEnLaEsquina)
+        tomarPapel
+      mover
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+  fin
+variables
+  papelero1,papelero2,papelero3: tipoPapelero
+  coordinador: tipoCoordinador
+comenzar
+  AsignarArea(papelero1, areaPapelero1)
+  AsignarArea(papelero2,areaPapelero2)
+  AsignarArea(papelero3, areaPapelero3)
+  AsignarArea(coordinador, areaCoordinador)
+  Iniciar(papelero1,1,1)
+  Iniciar(papelero2,2,1)
+  Iniciar(papelero3,3,1)
+  Iniciar(coordinador,100,100)
+fin

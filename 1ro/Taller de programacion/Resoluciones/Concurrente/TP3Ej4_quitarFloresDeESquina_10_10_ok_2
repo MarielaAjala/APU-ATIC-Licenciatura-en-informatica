@@ -1,0 +1,102 @@
+programa TP3Ej4_quitarFloresDeESquina_10_10_ok_2
+procesos
+  proceso colaborar (ES hay: boolean)
+  variables
+    aveOrigen,calleOrigen: numero
+  comenzar
+    aveOrigen:= PosAv
+    calleOrigen:= PosCa
+    BloquearEsquina (10,10)
+    Pos (10,10)
+    si HayFlorEnLaEsquina
+      tomarFlor
+      hay:= V
+      BloquearEsquina (11,11)
+      Pos (11,11)
+      LiberarEsquina(10,10)
+      Pos (11,11)
+      depositarFlor
+      Pos (aveOrigen,calleOrigen)
+      LiberarEsquina (11,11)
+    sino
+      hay:=F
+      Pos (aveOrigen,calleOrigen)
+      LiberarEsquina(10,10)
+  fin
+  proceso vaciarEsq_11_11JEFE
+  comenzar
+    Pos (11,11)
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+    Pos (1,1)
+  fin
+areas
+  esquinaAVaciar: AreaC (10,10,10,10)
+  esquinaDeposito: AreaC (11,11,11,11)
+  areaJefe: AreaP (1,1,1,1)
+  areaRobot1: AreaP (9,9,9,9)
+  areaRobot2: AreaP (9,10,9,10)
+  areaRobot3: AreaP (9,11,9,11)
+  areaRobot4: AreaP (9,12,9,12)
+robots
+  robot tipoCompetidor
+  variables
+    f,quienSoy: numero
+    hayFlor: boolean
+  comenzar
+    colaborar (hayFlor)
+    EnviarMensaje(hayFlor,jefe)
+    mientras (hayFlor)   
+      colaborar (hayFlor)
+      EnviarMensaje(hayFlor,jefe)
+    RecibirMensaje (quienSoy,jefe)
+    EnviarMensaje(quienSoy, jefe) {PARA CUANDO NO HAYA FLORES SE ENTERE EL JEFE}
+  fin
+  robot tipoJefe
+  variables
+    quien,finalizaron:numero
+    hayFlor,finalizaronTodos: boolean
+  comenzar
+    RecibirMensaje (hayFlor,*)
+    finalizaron:=0
+    finalizaronTodos:=F
+    mientras (~finalizaronTodos)  
+      si ~hayFlor
+        finalizaron:=finalizaron+1
+        si finalizaron=1
+          EnviarMensaje(1,robot1)
+          EnviarMensaje(2,robot2)
+          EnviarMensaje(3,robot3)
+          EnviarMensaje(4,robot4)
+        RecibirMensaje(quien,*)
+      si (finalizaron = 4)
+        finalizaronTodos:=V
+      sino
+        RecibirMensaje (hayFlor,*)
+    Informar ('Ultimo_en_finalizar',quien)
+    vaciarEsq_11_11JEFE
+  fin
+variables
+  robot1,robot2,robot3,robot4: tipoCompetidor
+  jefe: tipoJefe
+comenzar
+  AsignarArea (robot1,esquinaAVaciar )
+  AsignarArea (robot2, esquinaAVaciar)
+  AsignarArea (robot3, esquinaAVaciar)
+  AsignarArea (robot4, esquinaAVaciar)
+  AsignarArea (robot1,esquinaDeposito )
+  AsignarArea (robot2, esquinaDeposito)
+  AsignarArea (robot3, esquinaDeposito)
+  AsignarArea (robot4, esquinaDeposito)
+  AsignarArea (robot1, areaRobot1)
+  AsignarArea (robot2, areaRobot2)
+  AsignarArea (robot3, areaRobot3)
+  AsignarArea (robot4, areaRobot4)
+  AsignarArea (jefe, areaJefe)
+  AsignarArea (jefe, esquinaDeposito)
+  Iniciar (jefe, 1,1 )
+  Iniciar (robot1, 9,9 )
+  Iniciar (robot2, 9,10)
+  Iniciar (robot3, 9,11 )
+  Iniciar (robot4, 9,12)
+fin

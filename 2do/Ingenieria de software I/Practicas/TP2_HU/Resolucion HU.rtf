@@ -1,0 +1,485 @@
+{\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Courier New;}}
+{\colortbl ;\red0\green77\blue187;}
+{\*\generator Riched20 10.0.22621}\viewkind4\uc1 
+\pard\b\f0\fs22\lang11274 Problema 1: \cf1 Alquiler de mobiliario\par
+
+\pard\cf0\b0 ID: Autenticarse encargado.\par
+T\'cdTULO: \b Como \b0 <encargado de mobiliario> \b quiero \b0 <autenticarme en el sistema> \b para \b0 <poder dar de alta el mobiliario para que luego sea reservado online por clientes>.\par
+REGLAS DE NEGOCIO: solo personal autorizado (encargado de mobiliario). \par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+
+\pard\cf1\b\par
+\par
+\cf0\b0\par
+\ul ID\ulnone : \b\fs24 Cargar mobiliario\b0\fs22 .\par
+\ul T\'cdTULO\ulnone : \b Como \b0 <encargado del departamento de mobiliario> \b quiero \b0 <cargar el mobiliario en un sistema> \b para \b0 <que los clientes puedan reservarlos online>.\par
+\ul REGLAS DE NEGOCIO\ulnone : los codigos no pueden repetirse. El precio se debe cargar en dolares.\par
+\par
+\ul CRITERIOS DE ACEPTACION:\ulnone\par
+\b\i Escenario \b0 1: \i0 Carga exitosa.\par
+Dado <que el encargado de mobiliario se autentica exitosamente en el sistema>,\par
+
+\pard Cuando <ingresa c\'f3digo de inventario inexistente previamente, tipo de mueble, fecha de creaci\'f3n, fecha de \'faltimo\par
+
+\pard mantenimiento, estado (libre/de baja/alquilado) y el precio de alquiler, cuando presiona "Dar de alta">,\par
+Entonces <el mobiliario se carga en el stock del sistema exitosamente>.\par
+
+\pard\b\i Escenario 2: \b0\i0 Carga fallida por codigo de inventario preexistente.\par
+Dado <que el encargado de mobiliario se autentica exitosamente en el sistema>,\par
+Cuando <ingresa c\'f3digo de inventario existente previamente, tipo de mueble, fecha de creaci\'f3n, fecha de \'faltimo\par
+mantenimiento, estado (libre/de baja/alquilado) y el precio de alquiler, cuando presiona "Dar de alta">,\par
+Entonces <el sistema informa que no se puede realizar la carga en el stock del sistema debido a que el codigo de inventario ya se encontraba ingresado previamente en sistema>.\par
+
+\pard\b\i Escenario 3: \b0\i0\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\b\i Escenario 4:\par
+\b0\i0 Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+----------------------------------------------------------------\par
+\par
+Problema 2: Posgrado\par
+ID: \par
+
+\pard T\'cdTULO: \b Como \b0 <> \b quiero \b0 <> \b para \b0 <>\par
+
+\pard REGLAS DE NEGOCIO:\par
+\par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+\par
+----------------------------------------------------------------\par
+\par
+Problema 3: Contratos\par
+ID: \par
+
+\pard T\'cdTULO: \b Como \b0 <> \b quiero \b0 <> \b para \b0 <>\par
+
+\pard REGLAS DE NEGOCIO:\par
+\par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+\par
+----------------------------------------------------------------\par
+\par
+Problema 4: Venta de bebidas\par
+ID: \par
+
+\pard T\'cdTULO: \b Como \b0 <> \b quiero \b0 <> \b para \b0 <>\par
+
+\pard REGLAS DE NEGOCIO:\par
+\par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+\par
+----------------------------------------------------------------\par
+\par
+Problema 5: Casa de fotografia\par
+ID: \par
+T\'cdTULO: \b Como \b0 <> \b quiero \b0 <> \b para \b0 <>\par
+REGLAS DE NEGOCIO:\par
+\par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+\par
+----------------------------------------------------------------\par
+\par
+Problema 6: Biblioteca\par
+ID: \par
+T\'cdTULO: \b Como \b0 <> \b quiero \b0 <> \b para \b0 <>\par
+REGLAS DE NEGOCIO:\par
+\par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+\par
+----------------------------------------------------------------\par
+\par
+Problema 7: Mutual\par
+ID: \par
+T\'cdTULO: \b Como \b0 <> \b quiero \b0 <> \b para \b0 <>\par
+REGLAS DE NEGOCIO:\par
+\par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+\par
+----------------------------------------------------------------\par
+\par
+Problema 8: Teatro\par
+ID: \par
+T\'cdTULO: \b Como \b0 <> \b quiero \b0 <> \b para \b0 <>\par
+REGLAS DE NEGOCIO:\par
+\par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+\par
+----------------------------------------------------------------\par
+\par
+Problema 9: Pago electronico\par
+ID: \par
+T\'cdTULO: \b Como \b0 <> \b quiero \b0 <> \b para \b0 <>\par
+REGLAS DE NEGOCIO:\par
+\par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+\par
+----------------------------------------------------------------\par
+\par
+Problema 10: Un avent\'f3n\par
+ID: \par
+T\'cdTULO: \b Como \b0 <> \b quiero \b0 <> \b para \b0 <>\par
+REGLAS DE NEGOCIO:\par
+\par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+\par
+----------------------------------------------------------------\par
+\par
+Problema 11: Concursos\par
+ID: \par
+T\'cdTULO: \b Como \b0 <> \b quiero \b0 <> \b para \b0 <>\par
+REGLAS DE NEGOCIO:\par
+\par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+\par
+----------------------------------------------------------------\par
+\par
+Problema 12: Cr\'e9ditos bancarios\par
+ID: \par
+T\'cdTULO: \b Como \b0 <> \b quiero \b0 <> \b para \b0 <>\par
+REGLAS DE NEGOCIO:\par
+\par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+\par
+----------------------------------------------------------------\par
+\par
+Problema 13: Venta de libros\par
+ID: \par
+T\'cdTULO: \b Como \b0 <> \b quiero \b0 <> \b para \b0 <>\par
+REGLAS DE NEGOCIO:\par
+\par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+\par
+----------------------------------------------------------------\par
+\par
+Problema 14: Manejo de tarjetas de cr\'e9dito\par
+ID: \par
+T\'cdTULO: \b Como \b0 <> \b quiero \b0 <> \b para \b0 <>\par
+REGLAS DE NEGOCIO:\par
+\par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+----------------------------------------------------------------\par
+\par
+Problema 15: Manejo de canchas de tenis\par
+ID: \par
+T\'cdTULO: \b Como \b0 <> \b quiero \b0 <> \b para \b0 <>\par
+REGLAS DE NEGOCIO:\par
+\par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+----------------------------------------------------------------\par
+\par
+Problema 16: Procesamiento de im\'e1genes\par
+ID: \par
+T\'cdTULO: \b Como \b0 <> \b quiero \b0 <> \b para \b0 <>\par
+REGLAS DE NEGOCIO:\par
+\par
+\par
+CRITERIOS DE ACEPTACION:\par
+Escenario 1: \par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 2:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 3:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+Escenario 4:\par
+Dado <>,\par
+Cuando <>,\par
+Entonces <>.\par
+\par
+\par
+\par
+}
+ 

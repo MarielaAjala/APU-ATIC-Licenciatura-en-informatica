@@ -1,0 +1,138 @@
+****************************************
+     CÓDIGO DIAPOSITIVA 25
+****************************************
+
+class Persona
+{
+   public string Nombre { get; private set; }
+   public int Edad { get; private set; }
+   public string Pais { get; private set; }
+   public Persona(string nombre, int edad, string pais)
+   {
+       Nombre = nombre;
+       Edad = edad;
+       Pais = pais;
+   }
+   public override string ToString()
+   {
+      return $"{Nombre} ({Edad} años) {Pais.Substring(0, 3)}.";
+   }
+
+   // vamos a hardcodear una lista de personas
+   // que usaremos en los siguientes ejemplos
+   // para ello definimos el siguiente método estático
+   public static List<Persona> GetLista()
+   {
+       return new List<Persona>() {
+           new Persona("Pablo",15,"Argentina"),
+           new Persona("Juan", 55,"Argentina"),
+           new Persona("José",9,"Uruguay"),
+           new Persona("María",33,"Uruguay"),
+           new Persona("Lucía",16,"Perú"),
+       };
+   }
+}
+
+
+
+****************************************
+     CÓDIGO DIAPOSITIVA 64
+****************************************
+
+namespace Escuela;
+
+public class EscuelaInit
+{
+   public static void Inicializar(EscuelaContext context)
+   {
+       if (context.Alumnos.Count() > 0) // ya fue inicializada
+       {
+           return;
+       }
+
+       context.Add(new Alumno() { Nombre = "Juan",Email="juan@gmail.com" });
+       context.Add(new Alumno() { Nombre = "Ana" });
+       context.Add(new Alumno() { Nombre = "Laura" });
+
+       context.Add(new Examen() { AlumnoId = 2, Materia = "Inglés", Nota = 9, Fecha = DateTime.Parse("4/4/2022") });
+       context.Add(new Examen() { AlumnoId = 1, Materia = "Inglés", Nota = 5, Fecha = DateTime.Parse("1/3/2019") });
+       context.Add(new Examen() { AlumnoId = 1, Materia = "Álgebra", Nota = 10, Fecha = DateTime.Parse("24/5/2021") });
+
+       context.SaveChanges();
+   }
+}
+
+
+
+****************************************
+     CÓDIGO DIAPOSITIVA 69
+****************************************
+using Escuela;
+using (var db = new EscuelaContext())
+{
+  var query = db.Alumnos.Join(db.Examenes,
+               a => a.Id,
+               e => e.AlumnoId,
+               (a, e) => new
+               {
+                   Alumno = a.Nombre,
+                   Materia = e.Materia,
+                   Nota = e.Nota
+               });
+  foreach (var obj in query)
+  {
+      Console.WriteLine(obj);
+  }
+}
+
+
+****************************************
+     CÓDIGO DIAPOSITIVA 71
+****************************************
+using Escuela;
+
+using (var db = new EscuelaContext())
+{
+  //Agregamos un nuevo alumno
+  var alumno = new Alumno() { Nombre = "Pablo" }; // el Id será establecido por SQLite
+  db.Add(alumno); // se agregará realmente con el db.SaveChanges()
+  db.SaveChanges(); //actualiza la base de datos. SQlite establece el valor de alumno.Id
+
+  // Agregamos un examen para el nuevo alumno
+  var examen = new Examen()
+  {
+      AlumnoId = alumno.Id,
+      Materia = "Historia",
+      Nota = 9.5
+  };
+  db.Add(examen);
+  db.SaveChanges();
+}
+
+
+****************************************
+     CÓDIGO DIAPOSITIVA 73
+****************************************
+using Escuela;
+
+using (var db = new EscuelaContext())
+{
+  //borramos de la tabla Alumnos el registro con Id=3
+  var alumnoBorrar = db.Alumnos.Where(a => a.Id == 3).SingleOrDefault();
+  if (alumnoBorrar != null)
+  {
+      db.Remove(alumnoBorrar); //se borra realmente con el db.SaveChanges()
+  }
+
+  //La nota en Inglés del alumno id=1 es un 5. La cambiamos a 7.5
+  var examenModificar = db.Examenes.Where(
+                           e => e.AlumnoId == 1 && e.Materia == "Inglés").SingleOrDefault();
+  if (examenModificar != null)
+  {
+      examenModificar.Nota = 7.5; //se modifica el registro en memoria
+  }
+
+  db.SaveChanges(); //actualiza la base de datos.
+}
+
+

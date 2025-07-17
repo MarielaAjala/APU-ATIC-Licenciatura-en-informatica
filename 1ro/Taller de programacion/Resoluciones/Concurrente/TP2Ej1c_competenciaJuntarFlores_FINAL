@@ -1,0 +1,87 @@
+programa TP2Ej1c_competenciaJuntarFlores_FINAL
+procesos
+  proceso juntarFlores(ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso recorrido (E cuadras: numero; ES f: numero)
+  comenzar
+    repetir (cuadras-1)
+      juntarFlores(f)
+      mover
+    juntarFlores(f)
+  fin
+  proceso competir(ES mias:numero)
+  variables
+    cantCuadras:numero
+  comenzar
+    mias:=0
+    cantCuadras:=10
+    recorrido(cantCuadras,mias)
+  fin
+  proceso maximo(E n1:numero;E n2:numero; E n3:numero;E n4:numero;E n5:numero;E n6:numero;ES max:numero)
+  comenzar
+    max:=-1
+    si (n1>max)
+      max:=n1
+    si (n2>max)
+      max:=n2
+    si (n3>max)
+      max:=n3
+    si (n4>max)
+      max:=n4
+    si (n5>max)
+      max:=n5
+    si (n6>max)
+      max:=n6
+  fin
+areas
+  avenida1_1a10: AreaP (1,1,1,10)
+  avenida2_11a20: AreaP (2,11,2,20)
+  avenida3_21a30: AreaP (3,21,3,30)
+  avenida4_31a40: AreaP (4,31,4,40)
+  avenida5_41a50: AreaP (5,41,5,50)
+  avenida6_51a60: AreaP (6,51,6,60)
+  areaFiscal: AreaP (2,1,2,1)
+robots
+  robot competidor
+  variables
+    misFlores:numero
+  comenzar
+    competir(misFlores)
+    EnviarMensaje(misFlores,fiscalizador)   
+  fin
+  robot fiscalizador
+  variables
+    floresR1,floresR2,floresR3,floresR4,floresR5,floresR6,maximo: numero
+  comenzar
+    RecibirMensaje(floresR1,robot1)  
+    RecibirMensaje(floresR2,robot2)
+    RecibirMensaje(floresR3,robot3)
+    RecibirMensaje(floresR4,robot4)
+    RecibirMensaje(floresR5,robot5)
+    RecibirMensaje(floresR6,robot6)
+    maximo(floresR1,floresR2,floresR3,floresR4,floresR5,floresR6,maximo)
+    Informar('Ganador_junto_flores_',maximo)
+  fin
+variables
+  robot1,robot2,robot3,robot4,robot5,robot6: competidor
+  fiscalizador: fiscalizador
+comenzar
+  AsignarArea(robot1,avenida1_1a10)
+  AsignarArea(robot2,avenida2_11a20)
+  AsignarArea(robot3,avenida3_21a30)
+  AsignarArea(robot4,avenida4_31a40)
+  AsignarArea(robot5,avenida5_41a50)
+  AsignarArea(robot6,avenida6_51a60)
+  AsignarArea(fiscalizador,areaFiscal)
+  Iniciar(robot1,1,1)
+  Iniciar(robot2,2,11)
+  Iniciar(robot3,3,21)
+  Iniciar(robot4,4,31)
+  Iniciar(robot5,5,41)
+  Iniciar(robot6,6,51)
+  Iniciar(fiscalizador,2,1)
+fin

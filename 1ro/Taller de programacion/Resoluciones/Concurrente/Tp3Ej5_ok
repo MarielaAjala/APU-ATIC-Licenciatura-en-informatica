@@ -1,0 +1,94 @@
+programa Tp3Ej5_ok
+procesos
+  proceso juntaryDepositarPapel(E quienSoy:numero;ES termine: boolean)
+  variables
+    aveOrigen,calleOrigen:numero
+  comenzar
+    aveOrigen:=PosAv
+    calleOrigen:=PosCa
+    BloquearEsquina (11,11)
+    Pos (11,11)
+    {Informar('HayPapelEnLaEsquina_',HayPapelEnLaEsquina)}
+    si HayPapelEnLaEsquina
+      tomarPapel  
+      Pos (aveOrigen,calleOrigen)
+      LiberarEsquina(11,11)
+      si calleOrigen=100
+        termine:=V
+      depositarPapel
+    sino
+      termine:=V
+      {Informar('Entre_al_sino_',termine)  }
+      Pos(aveOrigen,calleOrigen)
+      LiberarEsquina (11,11)
+    si termine
+      EnviarMensaje (quienSoy,coordinador)  
+      EnviarMensaje(calleOrigen,coordinador)  
+  fin
+areas
+  avenida4: AreaP (4,1,4,100)
+  avenida6: AreaP (6,1,6,100)
+  avenida8: AreaP (8,1,8,100)
+  avenida10: AreaP (10,1,10,100)
+  puntoComun: AreaC (11,11,11,11)
+  areaCoordinador: AreaP (1,1,1,1)
+robots
+  robot tipoCompetidor
+  variables
+    quienSoy: numero
+    finalice:boolean
+  comenzar
+    RecibirMensaje (quienSoy,coordinador)
+    juntaryDepositarPapel(quienSoy,finalice)
+    mientras (PosCa<100)&(~finalice)
+      mover 
+      juntaryDepositarPapel(quienSoy,finalice)
+    si PosCa=100 {si calle=100}
+      juntaryDepositarPapel(quienSoy,finalice)
+  fin
+  robot tipoCoordinador
+  variables
+    quien,calle,distMax,ganador:numero
+  comenzar
+    EnviarMensaje (1,competidor1)
+    EnviarMensaje (2,competidor2)
+    EnviarMensaje (3,competidor3)
+    EnviarMensaje (4,competidor4)
+    distMax:=-1
+    repetir 4
+      RecibirMensaje (quien,*)
+      si (quien=1)
+        RecibirMensaje(calle,competidor1)
+      sino
+        si (quien=2)
+          RecibirMensaje(calle,competidor2)
+        sino
+          si quien=3
+            RecibirMensaje(calle,competidor3)
+          sino
+            RecibirMensaje(calle,competidor4)
+      si (calle>distMax)
+        distMax:=calle
+        ganador:=quien
+    Informar ('Ganador_',ganador)
+  fin
+variables
+  competidor1,competidor2,competidor3,competidor4: tipoCompetidor
+  coordinador: tipoCoordinador
+comenzar
+  AsignarArea(competidor1, avenida4)
+  AsignarArea(competidor2, avenida6)
+  AsignarArea(competidor3, avenida8)
+  AsignarArea(competidor4, avenida10)
+  AsignarArea(coordinador,areaCoordinador )
+  AsignarArea(coordinador,puntoComun )
+  AsignarArea(competidor1,puntoComun )
+  AsignarArea(competidor2,puntoComun )
+  AsignarArea(competidor3,puntoComun )
+  AsignarArea(competidor4,puntoComun )
+  Iniciar(coordinador,1,1)
+  Iniciar(competidor1,4,98)
+  Iniciar(competidor2,6,98)
+  Iniciar(competidor3,8,98)
+  Iniciar(competidor4,10,98)
+fin

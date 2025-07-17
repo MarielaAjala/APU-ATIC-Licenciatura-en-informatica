@@ -1,0 +1,92 @@
+programa TP2Ej1d_competenciaJuntarFlores_6robots
+procesos
+  proceso juntarFlores(ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso recorrido (E cuadras: numero; ES f: numero)
+  comenzar
+    repetir (cuadras-1)
+      juntarFlores(f)
+      mover
+    juntarFlores(f)
+  fin
+areas
+  avenida1_1a10: AreaP (1,1,1,10)
+  avenida2_11a20: AreaP (2,11,2,20)
+  avenida3_21a30: AreaP (3,21,3,30)
+  avenida4_31a40: AreaP (4,31,4,40)
+  avenida5_41a50: AreaP (5,41,5,50)
+  avenida6_51a60: AreaP (6,51,6,60)
+  areaFiscal: AreaP (2,1,2,1)
+robots
+  robot competidor1
+  variables
+    flores:numero
+  comenzar
+    flores:=0
+    recorrido(10,flores)
+    EnviarMensaje(flores,fiscalizador)   
+  fin
+  robot fiscalizador
+  variables
+    flores1,flores2,flores3,flores4,flores5,flores6: numero
+    quien:numero
+  comenzar
+    RecibirMensaje(flores1,robot1)  
+    RecibirMensaje(flores2,robot2)
+    RecibirMensaje(flores3,robot3)
+    RecibirMensaje(flores4,robot4)
+    RecibirMensaje(flores5,robot5)
+    RecibirMensaje(flores6,robot6)
+    Informar(flores1)
+    Informar(flores2)
+    Informar(flores3)
+    Informar(flores4)
+    Informar(flores5)
+    Informar(flores6)
+    si(flores1 > flores2)&(flores1 > flores3)&(flores1 > flores4)&(flores1 > flores5)&(flores1 > flores6)
+      quien:=1
+      Informar(flores1)
+    sino 
+      si (flores2>flores3)&(flores2>flores4)&(flores2>flores5)&(flores2>flores6)
+        quien:=2
+        Informar(flores2)
+      sino
+        si(flores3>flores4)&(flores3>flores5)&(flores3>flores6)
+          quien:=3
+          Informar(flores3)
+        sino
+          si (flores4>flores5)&(flores4>flores6)
+            quien:=4
+            Informar(flores4)
+          sino 
+            si (flores5>flores6)
+              quien:=5
+              Informar(flores5)
+            sino 
+              quien:=6
+              Informar(flores6)
+    Informar(quien)
+  fin
+variables
+  robot1,robot2,robot3,robot4,robot5,robot6:competidor1
+  fiscalizador: fiscalizador
+comenzar
+  AsignarArea(robot1,avenida1_1a10)
+  AsignarArea(robot2,avenida2_11a20)
+  AsignarArea(robot3,avenida3_21a30)
+  AsignarArea(robot4,avenida4_31a40)
+  AsignarArea(robot5, avenida5_41a50)
+  AsignarArea(robot6,avenida6_51a60)
+  AsignarArea(fiscalizador,areaFiscal)
+  Iniciar(robot1,1,1)
+  Iniciar(robot2,2,11)
+  Iniciar(robot3,3,21)
+  Iniciar(robot4,4,31)
+  Iniciar(robot5,5,41)
+  Iniciar(robot6,6,51)
+  Iniciar(fiscalizador,2,1)
+fin

@@ -1,0 +1,190 @@
+************************************************************
+           Diapositiva 24
+************************************************************
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #encabezado {
+            background-color: gray;
+            font-size: xx-large;
+        }
+
+        #rojo {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="encabezado">
+        <p>primer párrafo</p>
+        <p>segundo párrafo</p>
+        <span id="rojo">este texto es rojo</span> pero este no
+    </div>
+    <p>esto está fuera del encabezado</p>
+</body>
+
+</html>
+
+************************************************************
+           Diapositiva 27
+************************************************************
+<body>
+   <h1> Listado de clientes </h1>
+   <table>
+       <tr>
+           <th>Nombre</th>
+           <th>Apellido</th>
+           <th>Edad</th>
+       </tr>
+       <tr>
+           <td>Juan</td>
+           <td>García</td>
+           <td>33</td>
+       </tr>
+       <tr>
+           <td>María</td>
+           <td>Fernandez</td>
+           <td>22</td>
+       </tr>
+   </table>
+</body>
+
+************************************************************
+           Diapositiva 43
+************************************************************
+namespace HolaBlazor.Entidades;
+class Persona
+{
+    public string Nombre { get; set; } = "";
+    public string Apellido { get; set; } = "";
+    public int? Edad { get;  set; } //podría faltar el dato de la edad
+    
+    // vamos a hardcodear una lista de personas
+    // que usaremos en los siguientes ejemplos
+    // para ello definimos el siguiente método estático
+    public static List<Persona> GetLista()
+    {
+        return new List<Persona>() {
+           new Persona() {Nombre="Pablo",Apellido="Perez", Edad=34},
+           new Persona() {Nombre="Laura",Apellido="García", Edad=30},
+           new Persona() {Nombre="José",Apellido="Lopez", Edad=45},
+           new Persona() {Nombre="Ana",Apellido="Colombo", Edad=21},
+           new Persona() {Nombre="María",Apellido="Suarez", Edad=15},
+       };
+    }
+}
+
+
+************************************************************
+           Diapositiva 44
+************************************************************
+@page "/hola"
+@using HolaBlazor.Entidades
+
+<h1>Listado de personas</h1>
+<ul>
+@foreach (var p in lista)
+{
+   <li>@p.Apellido, @p.Nombre (@p.Edad)</li>
+}
+</ul>
+
+@code {
+   List<Persona> lista = Persona.GetLista();
+}
+
+
+************************************************************
+          Diapositiva 47
+************************************************************
+
+@page "/hola"
+
+<h1>Listado de personas</h1>
+<ul>
+   @foreach (var p in lista)
+   {
+       <li>@p.Apellido, @p.Nombre (@p.Edad)</li>
+   }
+</ul>
+<button @onclick="Agregar">Agregar a Carlos</button>
+
+@code {
+   List<Persona> lista = Persona.GetLista();
+   void Agregar() => lista.Add(new Persona() {
+               Nombre = "Carlos",
+               Apellido = "Maldini",
+               Edad = 66
+           });
+}
+
+
+************************************************************
+           Diapositiva 49
+************************************************************
+
+@page "/hola"
+
+<h1>Listado de personas</h1>
+<ul>
+   @foreach (var p in lista)
+   {
+       <li>@p.Apellido, @p.Nombre (@p.Edad)</li>
+   }
+</ul>
+<input placeholder="Nombre" @bind="p.Nombre" /><br>
+<input placeholder="Apellido" @bind="p.Apellido" /><br>
+<input type="number" placeholder="Edad" @bind="p.Edad" /><br>
+<button @onclick="Agregar">Agregar</button>
+
+@code {
+   List<Persona> lista = Persona.GetLista();
+   Persona p = new Persona();
+   void Agregar()
+   {
+       lista.Add(p);
+       p = new Persona();
+   }
+}
+
+************************************************************
+           Diapositiva 52
+************************************************************
+@page "/hola"
+
+<h1>Listado de personas</h1>
+<ul>
+    @foreach (var p in lista)
+    {
+        <li>@p.Apellido, @p.Nombre (@p.Edad)</li>
+    }
+</ul>
+@if (!SoloLectura)
+{
+    <input @ref="input_01" placeholder="Nombre" @bind="p.Nombre" /><br>
+    <input placeholder="Apellido" @bind="p.Apellido" /><br>
+    <input type="number" placeholder="Edad" @bind="p.Edad" /><br>
+    <button @onclick="Agregar">Agregar</button>
+}
+
+@code {
+    [Parameter]
+    public bool SoloLectura { get; set; } = false;
+    List<Persona> lista = Persona.GetLista();
+    ElementReference input_01;
+    Persona p = new Persona();
+    void Agregar()
+    {
+        lista.Add(p);
+        p = new Persona();
+        input_01.FocusAsync();
+    }
+}

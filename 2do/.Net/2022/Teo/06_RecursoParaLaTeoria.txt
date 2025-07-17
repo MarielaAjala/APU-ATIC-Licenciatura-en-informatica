@@ -1,0 +1,60 @@
+Código presentado en las diapositivas 6 a 9 de la teoría 6
+
+TipoAuto.cs
+===========
+
+namespace Teoria6;
+
+enum TipoAuto
+{
+   Familiar,
+   Deportivo,
+   Camioneta
+}
+
+---------------------------------------------------------
+Auto.cs
+=======
+
+namespace Teoria6;
+
+class Auto
+{
+   public string Marca = "";
+   public int Modelo;
+   public TipoAuto Tipo;
+   public void Imprimir()
+       => Console.WriteLine($"{Marca} {Modelo}");
+}
+
+---------------------------------------------------------
+Colectivo.cs
+============
+
+namespace Teoria6;
+
+class Colectivo
+{
+   public string Marca = "";
+   public int Modelo;
+   public int CantPasajeros;
+   public void Imprimir()
+       => Console.WriteLine($"{Marca} {Modelo}");
+}
+
+
+---------------------------------------------------------
+Program.cs
+
+using Teoria6;
+
+Auto a = new Auto();
+Colectivo c = new Colectivo();
+a.Marca = "Ford";
+a.Modelo = 2000;
+c.Marca = "Mercedes";
+c.Modelo = 2010;
+c.CantPasajeros = 20;
+a.Tipo = TipoAuto.Deportivo;
+a.Imprimir();
+c.Imprimir();

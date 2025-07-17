@@ -1,0 +1,125 @@
+programa Tp4Ej3a_Barrera_solHeterogenea_FINAL_Funciona_Consultar
+procesos
+  proceso enviarIds
+  comenzar
+    EnviarMensaje(1,papelero1)
+    EnviarMensaje(2,papelero2)
+    EnviarMensaje(3,papelero3)
+  fin
+  proceso enviaryRecibirMensajes(E quienSoy:numero;E calleActual:numero)
+  variables
+    quien:numero
+    seTermino:boolean
+  comenzar
+    seTermino:=(calleActual=100)
+    si (quienSoy=1)
+      EnviarMensaje(quienSoy,papelero2)
+      EnviarMensaje(quienSoy,papelero3)
+      RecibirMensaje(quien,*)
+      si (quien=2)
+        RecibirMensaje(quien,papelero3)
+      sino
+        RecibirMensaje(quien,papelero2)
+      EnviarMensaje(calleActual,papelero2)
+      EnviarMensaje(calleActual,papelero3)
+    sino
+      si (quienSoy=2)
+        EnviarMensaje(quienSoy,papelero1)
+        EnviarMensaje(quienSoy,papelero3)
+        RecibirMensaje(quien,*)
+        si (quien=1)
+          RecibirMensaje(quien,papelero3)
+        sino
+          RecibirMensaje(quien,papelero1)
+        EnviarMensaje(calleActual,papelero1)
+        EnviarMensaje(calleActual,papelero3)
+      sino
+        EnviarMensaje(quienSoy,papelero1)
+        EnviarMensaje(quienSoy,papelero2)
+        RecibirMensaje(quien,*)
+        si (quien=1)
+          RecibirMensaje(quien,papelero2)
+        sino
+          RecibirMensaje(quien,papelero1)
+        EnviarMensaje(calleActual,papelero1)
+        EnviarMensaje(calleActual,papelero2)
+  fin
+  proceso barrera(E quienSoy:numero;ES terminaronEtapas:boolean)
+  variables
+    posicion1,posicion2,miCalleActual:numero
+  comenzar
+    miCalleActual:=PosCa
+    si (quienSoy=1)
+      RecibirMensaje(posicion1,papelero2)
+      RecibirMensaje(posicion2,papelero3)  
+    sino
+      si (quienSoy=2)
+        RecibirMensaje(posicion1,papelero1)
+        RecibirMensaje(posicion2,papelero3)
+      sino
+        RecibirMensaje(posicion1,papelero1)
+        RecibirMensaje(posicion2,papelero2)
+    si (posicion1=100) | (posicion2=100) | (miCalleActual=100)
+      terminaronEtapas:=V
+  fin
+  proceso juntarPapeles
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+  fin
+areas
+  areaPapelero1: AreaP (1,1,1,100)
+  areaPapelero2: AreaP (2,1,2,100)
+  areaPapelero3: AreaP (3,1,3,100)
+  areaCoordinador: AreaP (100,100,100,100)
+robots
+  robot tipoCoordinador
+  comenzar
+    enviarIds 
+  fin
+  robot tipoPapelero
+  variables
+    quienSoy,calleActual,juntarCant,cantJuntada,etapa,terminaron:numero
+    terminoAlguno:boolean
+  comenzar
+    RecibirMensaje(quienSoy,coordinador)
+    calleActual:=PosCa
+    terminaron:=0
+    Random(juntarCant,1,5)
+    cantJuntada:=0
+    etapa:=0
+    terminoAlguno:=F
+    mientras (calleActual<=100)&(~terminoAlguno)
+      mientras (cantJuntada<juntarCant)& HayPapelEnLaEsquina
+        tomarPapel
+        cantJuntada:=cantJuntada + 1
+      si (juntarCant=cantJuntada)
+        enviaryRecibirMensajes(quienSoy,calleActual)
+        barrera(quienSoy,terminoAlguno)
+        Random(juntarCant,1,5)
+        cantJuntada:=0
+        etapa:=etapa + 1
+        Informar('Cant_etapas_',etapa)
+      sino
+        si ~HayPapelEnLaEsquina 
+          si (calleActual<100)
+            mover
+            calleActual:=calleActual+1
+          sino
+            enviaryRecibirMensajes(quienSoy,calleActual)
+            barrera(quienSoy,terminoAlguno)
+            Informar('Termino_alguno_',V)
+  fin
+variables
+  papelero1,papelero2,papelero3: tipoPapelero
+  coordinador: tipoCoordinador
+comenzar
+  AsignarArea(papelero1, areaPapelero1)
+  AsignarArea(papelero2,areaPapelero2)
+  AsignarArea(papelero3, areaPapelero3)
+  AsignarArea(coordinador, areaCoordinador)
+  Iniciar(papelero1,1,1)
+  Iniciar(papelero2,2,1)
+  Iniciar(papelero3,3,1)
+  Iniciar(coordinador,100,100)
+fin

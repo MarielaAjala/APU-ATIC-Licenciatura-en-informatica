@@ -1,0 +1,67 @@
+programa TP3Ej1_FlorerosyPapeleros
+procesos
+  proceso juntarFlores
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+  fin
+  proceso juntarPapeles
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+  fin
+areas
+  areaFloreros: AreaPC (1,1,5,10)
+  areaPapeleros: AreaPC (6,1,10,9)
+  esquinaFlorero1: AreaP (6,10,6,10)
+  esquinaFlorero2: AreaP (7,10,7,10)
+  esquinaPapelero1: AreaP (8,10,8,10)
+  esquinaPapelero2: AreaP (9,10,9,10)
+robots
+  robot Papelero
+  variables
+    aveOrigen,calleOrigen,avenida,calle:numero
+  comenzar
+    repetir 3
+      aveOrigen:=PosAv
+      calleOrigen:=PosCa
+      Random(calle,1,9)
+      Random(avenida,6,10)
+      BloquearEsquina(avenida,calle)
+      Pos(avenida,calle)
+      juntarPapeles
+      Pos(aveOrigen,calleOrigen)
+      LiberarEsquina(avenida,calle)
+  fin
+  robot Florero
+  variables
+    aveOrigen,calleOrigen,avenida,calle:numero
+  comenzar
+    repetir 5
+      aveOrigen:=PosAv
+      calleOrigen:=PosCa
+      Random(calle,1,10)
+      Random(avenida,1,5)
+      BloquearEsquina(avenida,calle)
+      Pos(avenida,calle)
+      juntarFlores
+      Pos(aveOrigen,calleOrigen)
+      LiberarEsquina(avenida,calle)
+  fin
+variables
+  florero1,florero2: Florero
+  papelero1,papelero2: Papelero
+comenzar
+  AsignarArea (florero1,areaFloreros)
+  AsignarArea (florero2,areaFloreros)
+  AsignarArea (papelero1,areaPapeleros)
+  AsignarArea (papelero2,areaPapeleros)
+  AsignarArea (florero1,esquinaFlorero1)
+  AsignarArea (florero2,esquinaFlorero2)
+  AsignarArea (papelero1,esquinaPapelero1)
+  AsignarArea (papelero2,esquinaPapelero2)
+  Iniciar (florero1,6,10)
+  Iniciar (florero2,7,10)
+  Iniciar (papelero1,8,10)
+  Iniciar (papelero2,9,10)
+fin

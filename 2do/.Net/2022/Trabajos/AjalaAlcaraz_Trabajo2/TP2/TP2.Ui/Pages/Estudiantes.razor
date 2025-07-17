@@ -1,0 +1,99 @@
+@page "/listadoestudiantes"
+@inject ListarEstudiantesUseCase ListarEstudiantesUseCase
+@inject IJSRuntime JsRuntime;
+@inject EliminarEstudianteUseCase EliminarEstudianteUseCase
+@inject NavigationManager Navegador
+@inherits LayoutComponentBase
+@inject ActualizarInscripcionesUseCase ActualizarInscripcionesUseCase
+<thead>
+        <tr>
+            <th><button class="btn btn-primary" @onclick="AgregarEstudiante">AgregarEstudiante</button></th>
+            <th>@MostrarMensaje</th>
+        </tr>
+        <tr> LISTADO DE ESTUDIANTES</tr>
+</thead>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>DNI</th>
+            <th>NOMBRE</th>
+            <th>APELLIDO</th>
+            <th>EMAIL</th>
+            <th>ACCIÓN</th>
+        </tr>
+    </thead>
+ <tbody>
+    @foreach (var estu in _lista)
+    {
+        <tr>
+            <td>@estu.Id</td>
+            <td>@estu.Dni</td>
+            <td>@estu.Nombre</td>
+            <td>@estu.Apellido</td>
+            <td>@estu.Email</td>
+            <td>
+                <button class="btn btn-primary" @onclick="()=>ModificarEstudiante(estu.Id)" @onmouseover="()=> MensajeModificar()" @onmouseout="()=> QuitarMensaje() ">
+                    <i class="oi oi-pencil"></i>
+                </button>
+                <button class="btn btn-danger" @onclick="()=>EliminarEstudiante(estu.Id)" @onmouseover="()=> MensajeEliminar()" @onmouseout="()=> QuitarMensaje()">
+                    <i class="oi oi-trash"></i>
+                </button>
+                <button class="btn btn-danger" @onclick="()=>ListarInscripciones(estu.Id)" @onmouseover="()=> MensajeListar()" @onmouseout="()=> QuitarMensaje()">
+                    <i class="oi oi-person"></i>
+                </button>
+            </td>
+        </tr>
+    }
+ </tbody>
+ </table>
+
+  
+@code {
+string MostrarMensaje="";
+ List<Estudiante> _lista = new List<Estudiante>();
+ protected override void OnInitialized()
+ {
+    _lista = ListarEstudiantesUseCase.Ejecutar();
+ }
+ async Task EliminarEstudiante(int id)
+ {
+    bool confirmado = await JsRuntime.InvokeAsync<bool>("confirm", $"Desea eliminar el estudiante {id}?");
+    if (confirmado)
+    {
+        EliminarEstudianteUseCase.Ejecutar(id);
+        ActualizarInscripcionesUseCase.Ejecutar(id);
+        _lista = ListarEstudiantesUseCase.Ejecutar();
+    }
+ }
+ void ModificarEstudiante(int id)
+ {
+    Navegador.NavigateTo($"estudiante/{id}");
+ }
+
+  void AgregarEstudiante(){ 
+       Navegador.NavigateTo("estudiante");   
+ }
+
+ void MensajeEliminar(){
+   MostrarMensaje="ELIMINAR ESTUDIANTE";
+ }
+ void MensajeModificar(){
+    MostrarMensaje= "MODIFICAR EESTUDIANTE";
+ }
+  void MensajeListar(){
+    MostrarMensaje="LISTAR TODOS LOS CURSOS INSCRIPTOS";
+ }
+
+ void QuitarMensaje(){
+    MostrarMensaje= "";
+ }
+
+ void ListarInscripciones(int id){
+    Navegador.NavigateTo($"inscripcionesestudiante/{id}");
+ }
+
+
+
+}

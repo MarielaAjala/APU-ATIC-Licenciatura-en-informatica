@@ -1,0 +1,103 @@
+programa TP3Ej1_FlorerosyPapeleros_FINAL
+procesos
+  proceso posicionarse(E avenida:numero;E calle:numero)
+  comenzar
+    BloquearEsquina(avenida,calle)
+    Pos(avenida,calle)
+  fin
+  proceso juntarFloresRandom(E aveOrigen:numero;E calleOrigen:numero;ES flores:numero)
+  variables
+    avenida,calle:numero
+  comenzar 
+    Random(avenida,1,5)
+    Random(calle,1,10)
+    posicionarse(avenida,calle)
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+    Pos(aveOrigen,calleOrigen)
+    LiberarEsquina(avenida,calle)
+  fin
+  proceso juntarPapelesRandom(E aveOrigen:numero;E calleOrigen:numero;ES papeles:numero)
+  variables
+    avenida,calle:numero
+  comenzar
+    Random(avenida,6,10)
+    Random(calle,1,9)
+    posicionarse(avenida,calle)
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+    Pos(aveOrigen,calleOrigen) 
+    LiberarEsquina(avenida,calle)
+  fin
+  proceso depositarUnaFlor(E aveOrigen:numero;E calleOrigen:numero)
+  comenzar
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    depositarFlor
+    Pos(aveOrigen,calleOrigen)
+    LiberarEsquina(10,10)
+  fin
+  proceso depositarUnPapel(E aveOrigen:numero;E calleOrigen:numero)
+  comenzar
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    depositarPapel
+    Pos(aveOrigen,calleOrigen)
+    LiberarEsquina(10,10)
+  fin
+areas
+  areaFloreros: AreaPC (1,1,5,10)
+  areaPapeleros: AreaPC (6,1,10,9)
+  esquinaFlorero1: AreaP (6,10,6,10)
+  esquinaFlorero2: AreaP (7,10,7,10)
+  esquinaPapelero1: AreaP (8,10,8,10)
+  esquinaPapelero2: AreaP (9,10,9,10)
+  deposito: AreaPC (10,10,10,10)
+robots
+  robot Papelero
+  variables
+    aveOrigen,calleOrigen,papeles:numero
+  comenzar
+    aveOrigen:=PosAv
+    calleOrigen:=PosCa
+    papeles:=0
+    repetir 3
+      juntarPapelesRandom(aveOrigen,calleOrigen,papeles)  
+    repetir papeles
+      depositarUnPapel(aveOrigen,calleOrigen)   
+  fin
+  robot Florero
+  variables
+    aveOrigen,calleOrigen,flores:numero
+  comenzar
+    aveOrigen:=PosAv
+    calleOrigen:=PosCa
+    flores:=0
+    repetir 5
+      juntarFloresRandom(aveOrigen,calleOrigen,flores)  
+    repetir flores
+      depositarUnaFlor(aveOrigen,calleOrigen)   
+  fin
+variables
+  florero1,florero2: Florero
+  papelero1,papelero2: Papelero
+comenzar
+  AsignarArea (florero1,areaFloreros)
+  AsignarArea (florero1,deposito)
+  AsignarArea (florero2,areaFloreros)
+  AsignarArea (florero2,deposito)
+  AsignarArea (papelero1,areaPapeleros)
+  AsignarArea (papelero1,deposito)
+  AsignarArea (papelero2,areaPapeleros)
+  AsignarArea (papelero2,deposito)
+  AsignarArea (florero1,esquinaFlorero1)
+  AsignarArea (florero2,esquinaFlorero2) 
+  AsignarArea (papelero1,esquinaPapelero1)
+  AsignarArea (papelero2,esquinaPapelero2)
+  Iniciar (florero1,6,10)
+  Iniciar (florero2,7,10)
+  Iniciar (papelero1,8,10)
+  Iniciar (papelero2,9,10)
+fin

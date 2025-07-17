@@ -1,0 +1,12 @@
+c:\Users\marie\Downloads\Informatica\2do\.Net\2022\Trabajos\AjalaAlcaraz_Trabajo2\TP2\TP2.Aplicacion\bin\Debug\net6.0\TP2.Aplicacion.deps.json
+c:\Users\marie\Downloads\Informatica\2do\.Net\2022\Trabajos\AjalaAlcaraz_Trabajo2\TP2\TP2.Aplicacion\bin\Debug\net6.0\TP2.Aplicacion.dll
+c:\Users\marie\Downloads\Informatica\2do\.Net\2022\Trabajos\AjalaAlcaraz_Trabajo2\TP2\TP2.Aplicacion\bin\Debug\net6.0\TP2.Aplicacion.pdb
+c:\Users\marie\Downloads\Informatica\2do\.Net\2022\Trabajos\AjalaAlcaraz_Trabajo2\TP2\TP2.Aplicacion\obj\Debug\net6.0\TP2.Aplicacion.csproj.AssemblyReference.cache
+c:\Users\marie\Downloads\Informatica\2do\.Net\2022\Trabajos\AjalaAlcaraz_Trabajo2\TP2\TP2.Aplicacion\obj\Debug\net6.0\TP2.Aplicacion.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\marie\Downloads\Informatica\2do\.Net\2022\Trabajos\AjalaAlcaraz_Trabajo2\TP2\TP2.Aplicacion\obj\Debug\net6.0\TP2.Aplicacion.AssemblyInfoInputs.cache
+c:\Users\marie\Downloads\Informatica\2do\.Net\2022\Trabajos\AjalaAlcaraz_Trabajo2\TP2\TP2.Aplicacion\obj\Debug\net6.0\TP2.Aplicacion.AssemblyInfo.cs
+c:\Users\marie\Downloads\Informatica\2do\.Net\2022\Trabajos\AjalaAlcaraz_Trabajo2\TP2\TP2.Aplicacion\obj\Debug\net6.0\TP2.Aplicacion.csproj.CoreCompileInputs.cache
+c:\Users\marie\Downloads\Informatica\2do\.Net\2022\Trabajos\AjalaAlcaraz_Trabajo2\TP2\TP2.Aplicacion\obj\Debug\net6.0\TP2.Aplicacion.dll
+c:\Users\marie\Downloads\Informatica\2do\.Net\2022\Trabajos\AjalaAlcaraz_Trabajo2\TP2\TP2.Aplicacion\obj\Debug\net6.0\refint\TP2.Aplicacion.dll
+c:\Users\marie\Downloads\Informatica\2do\.Net\2022\Trabajos\AjalaAlcaraz_Trabajo2\TP2\TP2.Aplicacion\obj\Debug\net6.0\TP2.Aplicacion.pdb
+c:\Users\marie\Downloads\Informatica\2do\.Net\2022\Trabajos\AjalaAlcaraz_Trabajo2\TP2\TP2.Aplicacion\obj\Debug\net6.0\ref\TP2.Aplicacion.dll

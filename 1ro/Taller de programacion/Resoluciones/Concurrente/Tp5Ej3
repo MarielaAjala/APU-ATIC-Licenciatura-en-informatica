@@ -1,0 +1,106 @@
+programa Tp5Ej3
+procesos
+  proceso depositarFlores
+  variables
+    aveOrigen,calleOrigen: numero
+  comenzar
+    aveOrigen:=PosAv
+    calleOrigen:=PosCa
+    BloquearEsquina (10,10)
+    Pos (10,10)
+    mientras (HayFlorEnLaBolsa)
+      depositarFlor
+    Pos (aveOrigen,calleOrigen)
+    LiberarEsquina (10,10)
+  fin
+  proceso cosecharFlores(ES total:numero)
+  comenzar
+    BloquearEsquina (10,10)
+    Pos (10,10)
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      total:=total+1
+    Pos (1,5)
+    LiberarEsquina (10,10)
+  fin
+areas
+  areaCosechador: AreaP (1,5,1,5)
+  calleRecolector1: AreaPC (1,3,100,3)
+  calleRecolector2: AreaPC (1,4,100,4)
+  deposito: AreaC (10,10,10,10)
+robots
+  robot tipoRecolector
+  variables
+    quienSoy,cantFlores,cantAvances: numero
+  comenzar
+    derecha
+    RecibirMensaje (quienSoy,cosechador)
+    cantFlores:=0
+    cantAvances:=0
+    mientras (PosAv<100)
+      mientras (cantAvances<5)&(PosAv<100)
+        mientras ((HayFlorEnLaEsquina)&(cantFlores<10))
+          tomarFlor 
+          cantFlores:=cantFlores+1 
+        si (~HayFlorEnLaEsquina)
+          mover
+          cantAvances:=cantAvances+1
+        sino
+          depositarFlores {Junte 10 flores, a pesar de que hay mas}
+          cantFlores:=0
+          EnviarMensaje (quienSoy,cosechador)  
+          EnviarMensaje (F,cosechador)
+      si (cantAvances=5)
+        cantAvances:=0
+        depositarFlores {Junte 10 flores, a pesar de que hay mas}
+        EnviarMensaje (quienSoy,cosechador)  
+        EnviarMensaje (F,cosechador)
+    mientras ((HayFlorEnLaEsquina)&(cantFlores<10)) {Avenida 100}
+      tomarFlor 
+      cantFlores:=cantFlores+1 
+      si (cantFlores=10)
+        cantFlores:=0
+        depositarFlores {Junte 10 flores, a pesar de que hay mas}
+        EnviarMensaje (quienSoy,cosechador)  
+        EnviarMensaje (F,cosechador)    
+    si (cantFlores>0)
+      depositarFlores
+    EnviarMensaje(quienSoy,cosechador)
+    EnviarMensaje(V,cosechador)
+  fin
+  robot tipoCosechador
+  variables
+    quien,terminaron,total :numero
+    finalizo:boolean
+  comenzar
+    EnviarMensaje(1,recolector1)
+    EnviarMensaje(2,recolector2)
+    terminaron:=0
+    total:=0
+    mientras (terminaron<2)
+      RecibirMensaje (quien,*)
+      cosecharFlores(total)
+      si (quien=1)
+        RecibirMensaje (finalizo,recolector1)  
+        si finalizo
+          terminaron:=terminaron + 1
+      sino
+        RecibirMensaje (finalizo,recolector2)
+        si finalizo
+          terminaron:=terminaron + 1
+    Informar ('Cantidad_cosechada_',total)     
+  fin
+variables
+  recolector1,recolector2:tipoRecolector
+  cosechador:tipoCosechador
+comenzar
+  AsignarArea (cosechador,areaCosechador)
+  AsignarArea (recolector1,calleRecolector1)
+  AsignarArea (recolector2,calleRecolector2)
+  AsignarArea (cosechador,deposito)
+  AsignarArea (recolector1,deposito)
+  AsignarArea (recolector2,deposito)
+  Iniciar (cosechador,1,5)
+  Iniciar (recolector1,1,3)
+  Iniciar (recolector2,1,4)
+fin

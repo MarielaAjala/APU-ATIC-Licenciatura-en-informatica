@@ -1,0 +1,68 @@
+# Archivos y carpetas del sistema
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# VSCode
+.vscode/
+
+# Archivos temporales de editores
+*.swp
+*.swo
+*~
+
+# Archivos compilados / binarios
+*.class
+*.exe
+*.dll
+*.out
+*.o
+*.obj
+*.pyc
+*.pyo
+*.rbc
+*.rbo
+
+# Ignorar archivos pesados
+*.mp4
+*.m4a
+*.pptx
+
+# Logs
+*.log
+
+# Archivos comprimidos
+*.zip
+*.rar
+*.7z
+*.tar.gz
+*.tgz
+
+# Maven / Java
+target/
+*.iml
+.idea/
+
+# Node.js (por si subís algo con JS/TS)
+node_modules/
+dist/
+
+# Python virtualenv
+venv/
+.env
+.env.*
+
+# Carpetas específicas que dan problemas
+3ro/Ing software 2/Trabajo grupal/
+
+#Archivos grandes
+C:/APU-ATIC-Licenciatura-en-informatica/2do/DBD/Teorias/clase 2_1 Conceptual primera parte.pptx
+C:/APU-ATIC-Licenciatura-en-informatica/2do/DBD/Teorias/clase 3_1.pptx
+C:/APU-ATIC-Licenciatura-en-informatica/2do/DBD/Teorias/clase 4_2.pptx
+C:/APU-ATIC-Licenciatura-en-informatica/2do/DBD/Teorias/clase 5_1.pptx
+C:/APU-ATIC-Licenciatura-en-informatica/2do/DBD/Teorias/clase 6_1.pptx
+C:/APU-ATIC-Licenciatura-en-informatica/2do/DBD/Teorias/clase 7.pptx
+C:/APU-ATIC-Licenciatura-en-informatica/2do/DBD/Teorias/clase 8 _2.pptx
+C:/APU-ATIC-Licenciatura-en-informatica/2do/DBD/Teorias/clase 8_1.pptx
+C:/APU-ATIC-Licenciatura-en-informatica/2do/DBD/Teorias/clase2_2.pptx

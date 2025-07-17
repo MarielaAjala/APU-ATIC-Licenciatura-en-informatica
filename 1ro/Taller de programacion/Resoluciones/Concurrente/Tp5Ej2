@@ -1,0 +1,102 @@
+programa Tp5Ej2
+procesos
+  proceso enviarIds
+  comenzar
+    EnviarMensaje (1,recolector1)
+    EnviarMensaje (2,recolector2)
+    EnviarMensaje (3,recolector3)
+  fin
+  proceso notificarContinuidad(E continuar:boolean)
+  comenzar
+    EnviarMensaje (continuar,recolector1)
+    EnviarMensaje (continuar,recolector2)
+    EnviarMensaje (continuar,recolector3)
+  fin
+  proceso vaciarEsquina
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+  fin
+  proceso dejarFloresEnPuntoComun(E aveOrigen:numero;E calleOrigen:numero)
+  comenzar
+    BloquearEsquina (50,50)
+    Pos(50,50)
+    mientras HayFlorEnLaBolsa
+      depositarFlor
+    Pos(aveOrigen,calleOrigen)
+    LiberarEsquina (50,50)
+  fin
+  proceso contarFloresDepositadas (ES cant:numero)
+  comenzar
+    cant:=0
+    Pos (50,50)
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      cant:=cant+1
+    Pos(1,4)
+  fin
+areas
+  areaFiscalizador: AreaP (1,4,1,4)
+  calleRecolector1: AreaP (1,1,100,1)
+  calleRecolector2: AreaP (1,2,100,2)
+  calleRecolector3: AreaP (1,3,100,3)
+  puntoDeposito: AreaC (50,50,50,50)
+robots
+  robot tipoRecolector
+  variables
+    quienSoy,aveOrigen,calleOrigen: numero
+    continuar:boolean
+  comenzar
+    RecibirMensaje(quienSoy,fiscalizador)
+    calleOrigen:=PosCa
+    aveOrigen:=PosAv
+    derecha
+    repetir 9
+      repetir 10
+        vaciarEsquina
+        mover
+      dejarFloresEnPuntoComun(aveOrigen,calleOrigen)
+      EnviarMensaje (V,fiscalizador)
+      RecibirMensaje(continuar,fiscalizador)
+      aveOrigen:=aveOrigen+10
+    repetir 9
+      vaciarEsquina
+      mover
+    aveOrigen:=aveOrigen+9
+    dejarFloresEnPuntoComun(aveOrigen,calleOrigen)
+    EnviarMensaje (V,fiscalizador)
+  fin
+  robot tipoFiscalizador  
+  variables
+    finEtapa:boolean
+    total: numero
+  comenzar
+    enviarIds
+    repetir 9
+      repetir 3
+        RecibirMensaje (finEtapa,*)
+      notificarContinuidad(V)
+    repetir 3
+      RecibirMensaje (finEtapa,*)
+    contarFloresDepositadas (total)
+    Informar ('Cantidad_total_de_flores_',total)
+  fin
+variables
+  recolector1,recolector2,recolector3: tipoRecolector
+  fiscalizador: tipoFiscalizador
+comenzar
+  AsignarArea (recolector1, calleRecolector1)
+  AsignarArea (recolector2, calleRecolector2)
+  AsignarArea (recolector3, calleRecolector3)
+  AsignarArea (fiscalizador,areaFiscalizador)
+  AsignarArea (recolector1, puntoDeposito)
+  AsignarArea (recolector2, puntoDeposito)
+  AsignarArea (recolector3, puntoDeposito)
+  AsignarArea (fiscalizador,puntoDeposito)
+  Iniciar (fiscalizador, 1,4)
+  Iniciar (recolector1, 1,1)
+  Iniciar (recolector2, 1,2)
+  Iniciar (recolector3, 1,3)
+fin

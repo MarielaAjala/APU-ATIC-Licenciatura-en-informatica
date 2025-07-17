@@ -1,0 +1,110 @@
+programa Tp4Ej4_MasterSlave
+procesos
+  proceso recogerFlores (E aveOrigen:numero;E calleOrigen:numero;E aveDestino:numero;E calleDestino:numero)
+  comenzar
+    BloquearEsquina (aveDestino,calleDestino)
+    Pos (aveDestino,calleDestino)
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+    Pos(aveOrigen,calleOrigen)
+    LiberarEsquina(aveDestino,calleDestino)
+    EnviarMensaje(V,jefe)
+  fin
+  proceso recogerPapeles (E aveOrigen:numero;E calleOrigen:numero;E aveDestino:numero;E calleDestino:numero)
+  comenzar
+    BloquearEsquina (aveDestino,calleDestino)
+    Pos (aveDestino,calleDestino)
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+    Pos(aveOrigen,calleOrigen)
+    LiberarEsquina(aveDestino,calleDestino)
+    EnviarMensaje(V,jefe)
+  fin
+  proceso vaciarBolsa (E aveOrigen:numero;E calleOrigen:numero;E aveDestino:numero;E calleDestino:numero)
+  comenzar
+    BloquearEsquina (aveDestino,calleDestino)
+    Pos (aveDestino,calleDestino)
+    mientras HayPapelEnLaBolsa
+      depositarPapel
+    mientras HayFlorEnLaBolsa
+      depositarFlor
+    Pos(aveOrigen,calleOrigen)
+    LiberarEsquina(aveDestino,calleDestino)
+    EnviarMensaje(V,jefe)
+  fin
+  proceso finalizar
+  comenzar
+    EnviarMensaje(V,jefe)
+  fin
+areas
+  areaTareas: AreaPC (2,2,100,100)
+  areaJefe: AreaP (1,1,1,1)
+  areaTrabajador1: AreaP (2,1,2,1)
+  areaTrabajador2: AreaP (3,1,3,1)
+robots
+  robot tipoJefe
+  variables
+    tarea,calle,avenida,calleOrigen,aveOrigen,numRobot:numero
+    cumplioTarea,leToca:boolean
+  comenzar
+    leToca:=V
+    repetir 10
+      Random(tarea,1,4)
+      Random(numRobot,1,2)
+      Random(avenida,2,100)
+      Random(calle,2,100)
+      si (numRobot=1)
+        EnviarMensaje(leToca,trabajador1)
+        EnviarMensaje(~leToca,trabajador2)
+        EnviarMensaje(tarea,trabajador1)
+        si (tarea <> 4)
+          EnviarMensaje(avenida,trabajador1)
+          EnviarMensaje(calle,trabajador1)
+        RecibirMensaje(cumplioTarea,trabajador1)
+      sino
+        EnviarMensaje(~leToca,trabajador1)
+        EnviarMensaje(leToca,trabajador2)
+        EnviarMensaje(tarea,trabajador2)
+        si (tarea<>4)
+          EnviarMensaje(avenida,trabajador2)
+          EnviarMensaje(calle,trabajador2)
+        RecibirMensaje(cumplioTarea,trabajador2)
+  fin
+  robot tipoTrabajador
+  variables
+    toDo,av,ca,aveOrigen,calleOrigen:numero
+    meToca:boolean
+  comenzar
+    aveOrigen:=PosAv
+    calleOrigen:=PosCa
+    repetir 10
+      RecibirMensaje(meToca,jefe)
+      si meToca
+        RecibirMensaje(toDo,jefe)
+        si (toDo<>4)
+          RecibirMensaje(av,jefe)
+          RecibirMensaje(ca,jefe)
+        si (toDo=1)
+          recogerFlores (aveOrigen,calleOrigen,av,ca)
+        sino
+          si (toDo=2)
+            recogerPapeles (aveOrigen,calleOrigen,av,ca)
+          sino
+            si (toDo=3)
+              vaciarBolsa (aveOrigen,calleOrigen,av,ca)
+            sino
+              finalizar
+  fin
+variables
+  trabajador1,trabajador2: tipoTrabajador
+  jefe: tipoJefe
+comenzar
+  AsignarArea (trabajador1, areaTrabajador1)
+  AsignarArea (trabajador2, areaTrabajador2)
+  AsignarArea (trabajador1, areaTareas)
+  AsignarArea (trabajador2, areaTareas)
+  AsignarArea (jefe, areaJefe)
+  Iniciar (trabajador1, 2,1)
+  Iniciar (trabajador2, 3,1)
+  Iniciar (jefe, 1,1)
+fin

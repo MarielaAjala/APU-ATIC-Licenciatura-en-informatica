@@ -1,0 +1,52 @@
+@page "/curso/{id:int?}"
+@inject ObtenerCursoUseCase ObtenerCursoUseCase
+@inject ModificarCursoUseCase ModificarCursoUseCase
+@inject NavigationManager Navegador;
+@inject AgregarCursoUseCase AgregarCursoUseCase
+@inject IJSRuntime JsRuntime;
+
+@if (_esNuevoCurso)
+{
+   <h3>Agregando un nuevo Curso</h3>
+}
+else
+{
+   <h3>Modificando al Curso "@_curso.Titulo"</h3>
+}
+<input placeholder="Descripcion" @bind="_curso.Descripcion" class="form-control">
+<input placeholder="Fecha de Inicio" @bind="_curso.FechaDeInicio" class="form-control">
+<input placeholder="Fecha de Fin" @bind="_curso.FechaDeFin" class="form-control">
+<button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+@code {
+Curso _curso = new Curso();
+ [Parameter] public int id { get; set; }
+ bool _esNuevoCurso=true;
+ protected override void OnParametersSet()
+ {
+      var curso_hallado = ObtenerCursoUseCase.Ejecutar(id);
+      if (curso_hallado != null)
+      {
+         _curso = curso_hallado;
+         _esNuevoCurso=false;
+      }
+ }
+
+async Task Aceptar()
+ {
+    if (_esNuevoCurso)
+   {
+      AgregarCursoUseCase.Ejecutar(_curso); 
+   }
+ else
+ {
+   if(_curso.FechaDeFin> _curso.FechaDeInicio)
+   {
+    ModificarCursoUseCase.Ejecutar(_curso);
+   }
+   else {await JsRuntime.InvokeAsync<bool>("confirm","LA FECHA DE INICIO DEBE SER MENOR A LA DE FIN "); }
+ }
+
+ _curso = new Curso();
+ Navegador.NavigateTo("listadocursos");
+ }
+}

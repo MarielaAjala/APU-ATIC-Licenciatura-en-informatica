@@ -1,0 +1,43 @@
+@page "/inscripcionesestudiante/{id:int}"
+@inject NavigationManager Navegador;
+@inject CursosInscriptosUseCase CursosInscriptosUseCase
+
+
+<button class="btn btn-primary" @onclick="Volver">Volver</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID CURSO</th>
+            <th>CURSO</th>
+            <th>FECHA DE INCIO</th>
+        </tr>
+    </thead>
+ <tbody>
+    @foreach (var cur in _lista)
+    {
+        <tr>
+            <td>@cur.Id</td>
+            <td>@cur.Titulo</td>
+            <td>@cur.FechaDeInicio</td>
+
+        </tr>
+    }
+ </tbody>
+ </table>
+
+ @code {
+
+ List<Curso> _lista = new List<Curso>();
+ [Parameter] public int id { get; set; }
+ protected override void OnParametersSet()
+ {
+   _lista= CursosInscriptosUseCase.Ejecutar(id);
+ }
+
+ void Volver(){
+    Navegador.NavigateTo("listadoestudiantes");
+ }  
+ }
+
+ 
+

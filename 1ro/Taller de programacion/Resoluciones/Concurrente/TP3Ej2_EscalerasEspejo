@@ -1,0 +1,123 @@
+programa TP3Ej2_EscalerasEspejo
+procesos
+  proceso juntarFlores (ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso juntarPapeles (ES papeles: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso escalon (E n: numero; ES flores: numero)
+  comenzar
+    juntarFlores (flores)
+    repetir n
+      mover
+    juntarFlores (flores)
+    derecha
+    repetir n
+      mover
+    repetir 3
+      derecha 
+  fin
+  proceso escalonInverso (E n: numero; ES papeles: numero)
+  comenzar
+    juntarPapeles (papeles)
+    repetir n
+      mover
+    juntarPapeles (papeles)
+    repetir 3
+      derecha 
+    repetir n
+      mover
+    derecha  
+  fin
+areas
+  areaComun: AreaC (16,16,16,16)
+  areaRobot1: AreaPC (1,1,15,30)
+  areaRobot2: AreaP (17,1,31,30)
+robots
+  robot tipo1_Florero
+  variables
+    flores,i:numero
+  comenzar
+    i := 5
+    flores:=0
+    juntarFlores (flores)
+    repetir 4
+      escalon (i,flores)
+      i := i - 1
+    repetir i
+      mover
+    derecha
+    BloquearEsquina(16,16)
+    mover
+    EnviarMensaje (1,jefe)
+    juntarFlores (flores)
+    Pos(PosAv-1,PosCa)
+    LiberarEsquina(16,16)
+    repetir 2
+      derecha
+    repetir 4
+      i := i + 1  
+      escalon (i,flores) 
+    EnviarMensaje (V,jefe)
+    Informar ('Flores_',flores)
+  fin
+  robot tipo2_Papelero
+  variables
+    papeles,i:numero
+  comenzar
+    i := 5
+    papeles:=0
+    juntarPapeles (papeles)
+    repetir 4
+      escalonInverso (i,papeles)
+      i := i - 1
+    repetir i
+      mover
+    repetir 3
+      derecha
+    BloquearEsquina(16,16)
+    mover
+    EnviarMensaje (2,jefe)
+    juntarPapeles (papeles)
+    Pos(PosAv+1,PosCa)
+    LiberarEsquina(16,16)
+    repetir 2
+      derecha
+    repetir 4
+      i := i + 1  
+      escalonInverso (i,papeles)
+    EnviarMensaje (V,jefe)
+    Informar ('Papeles_',papeles)
+  fin 
+  robot tipoJefe
+  variables
+    ganador,segundo: numero
+    final: boolean
+  comenzar
+    RecibirMensaje(ganador,*)
+    RecibirMensaje (segundo,*)
+    RecibirMensaje (final,*)
+    RecibirMensaje (final,*)
+    Informar ('Primero_en_llegar_al_centro_',ganador)
+  fin
+variables
+  florero: tipo1_Florero
+  papelero: tipo2_Papelero
+  jefe: tipoJefe
+comenzar
+  AsignarArea (florero,areaRobot1)
+  AsignarArea (papelero,areaRobot2)
+  AsignarArea (florero,areaComun)
+  AsignarArea (papelero,areaComun)
+  AsignarArea (jefe,areaRobot1)
+  Iniciar (florero,1,1)
+  Iniciar (papelero,31,1)
+  Iniciar (jefe,15,1)
+fin

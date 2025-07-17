@@ -1,0 +1,107 @@
+@page "/listadocursos"
+@inject ListarCursosUseCase ListarCursosUseCase
+@inject IJSRuntime JsRuntime;
+@inject EliminarCursoUseCase EliminarCursoUseCase
+@inject NavigationManager Navegador
+@inject ActualizarInscripcionesCursoUseCase ActualizarInscripcionesCursoUseCase
+
+<tr>
+    <th><button class="btn btn-primary" @onclick="AgregarCurso">Agregar Curso</button>   </th>
+    <th>   <button class="btn btn-primary" @onclick="EnCurso">Estudiantes Cursando</button></th>
+    <th>   <button class="btn btn-primary" @onclick="Finalizaron">Estudiantes Finalizaron Cursos</button></th>
+    <th>@listar</th>
+</tr>
+<tr> CURSOS</tr>
+<table class="table">
+   
+    <thead>
+        <tr>
+            <th>ID CURSO</th>
+            <th>TITULO</th>
+            <th>DESCRIPCION</th>
+            <th>FECHA DE INICIO</th>
+            <th>FECHA DE FIN</th>
+        </tr>
+    </thead>
+ <tbody>
+    @foreach (var curso in _lista)
+    {
+        <tr>
+            <td>@curso.Id</td>
+            <td>@curso.Titulo</td>
+            <td>@curso.Descripcion</td>
+            <td>@curso.FechaDeInicio</td>
+            <td>@curso.FechaDeFin</td>
+            <td>
+                <button class="btn btn-primary" @onclick="()=>ModificarCurso(curso.Id)" @onmouseover="()=> MensajeModificar()" @onmouseout="()=> QuitarMensaje()">
+                    <i class="oi oi-pencil"></i>
+                </button>
+                <button class="btn btn-danger" @onclick="()=>EliminarCurso(curso.Id)"@onmouseover="()=> MensajeEliminar()" @onmouseout="()=> QuitarMensaje()">
+                    <i class="oi oi-trash"></i>
+                </button>
+                <button class="btn btn-danger" @onclick="()=>ListarPersonas(curso.Id)" @onmouseover="()=> MensajeListar()" @onmouseout="()=> QuitarMensaje()">
+                    <i class="oi oi-person"></i>
+                </button>
+            </td>
+        </tr>
+    }
+ </tbody>
+ </table>
+
+@code {
+ string listar="";
+ List<Curso> _lista = new List<Curso>();
+ protected override void OnInitialized()
+ {
+    _lista = ListarCursosUseCase.Ejecutar();
+ }
+ async Task EliminarCurso(int id)
+ {
+    bool confirmado = await JsRuntime.InvokeAsync<bool>("confirm", $"Desea eliminar el curso {id}?");
+    if (confirmado)
+    {
+        EliminarCursoUseCase.Ejecutar(id);
+        _lista = ListarCursosUseCase.Ejecutar();
+        ActualizarInscripcionesCursoUseCase.Ejecutar(id);
+    }
+ }
+ void ModificarCurso(int id)
+ {
+    Navegador.NavigateTo($"curso/{id}");
+ }
+
+ void AgregarCurso(){ 
+
+       Navegador.NavigateTo("agregarcurso");   
+ }
+
+ void ListarPersonas(int id){
+    Navegador.NavigateTo($"estudiantesinscriptos/{id}");
+
+ }
+
+ void EnCurso(){
+    Navegador.NavigateTo("estudiantesencurso");
+ }
+
+ void Finalizaron(){
+    Navegador.NavigateTo("finalizaroncurso");
+ }
+
+ void MensajeModificar(){
+    listar= "MODIFICAR CURSO" ;
+ }
+
+ void MensajeListar(){
+    listar= "LISTA DE PERSONAS INSCRIPTAS" ;
+ }
+
+ void MensajeEliminar(){
+    listar= "ELIMINAR CURSO" ;
+ }
+
+ void QuitarMensaje(){
+    listar="";
+ }
+
+}

@@ -1,0 +1,130 @@
+programa parcialConcurrente_otro_Equipos
+procesos
+  proceso enviarIds
+  comenzar
+    EnviarMensaje(11,robot1A)
+    EnviarMensaje(12,robot2A)
+    EnviarMensaje(21,robot1B)
+    EnviarMensaje(22,robot2B)
+  fin
+  proceso comunicarFinEtapa(E quien:numero)
+  comenzar
+    si (quien=11)
+      EnviarMensaje(V,robot2A)
+    sino
+      EnviarMensaje(V,robot2B)
+  fin
+  proceso depositarUnaFlor(E aveOrigen:numero; E caOrigen:numero)
+  comenzar
+    BloquearEsquina(20,20)
+    Pos(20,20)
+    depositarFlor
+    Pos(aveOrigen,caOrigen)
+    LiberarEsquina(20,20)
+  fin
+  proceso etapa(ES flores:numero)
+  comenzar
+    repetir 2
+      repetir 10
+        mientras HayFlorEnLaEsquina
+          tomarFlor
+          flores:=flores+1
+        mover
+      derecha
+  fin
+  proceso etapa2(ES flores:numero)
+  comenzar
+    repetir 2
+      repetir 9
+        mientras HayFlorEnLaEsquina
+          tomarFlor
+          flores:=flores+1
+        mover
+      derecha
+  fin
+areas
+  areaEquipoA: AreaPC (1,1,11,11)
+  areaEquipoB: AreaPC (13,1,23,11)
+  areaFiscalizador: AreaP (30,1,30,1)
+  deposito: AreaC (20,20,20,20)
+robots
+  robot tipoCompetidor
+  variables
+    floresJuntadas,quienSoy,aveOrigen,caOrigen:numero
+    empezar:boolean
+  comenzar
+    floresJuntadas:=0
+    aveOrigen:=PosAv
+    caOrigen:=PosCa
+    RecibirMensaje(quienSoy,fiscalizador)
+    si (quienSoy=11)|(quienSoy=21)
+      etapa(floresJuntadas)
+      si (quienSoy=11)
+        EnviarMensaje(V,robot2A)
+      sino
+        EnviarMensaje(V,robot2B)
+    sino
+      si (quienSoy=12)
+        RecibirMensaje(empezar,robot1A)
+      sino
+        RecibirMensaje(empezar,robot1B)
+      repetir 2
+        derecha
+      etapa2(floresJuntadas)
+    EnviarMensaje(quienSoy,fiscalizador)
+    EnviarMensaje(floresJuntadas,fiscalizador)
+    repetir floresJuntadas
+      depositarUnaFlor (aveOrigen,caOrigen)
+    EnviarMensaje(V,fiscalizador)
+  fin
+  robot tipoFiscalizador
+  variables
+    floresA,floresB,quien,flores:numero
+    finalizo:boolean
+  comenzar
+    enviarIds
+    floresA:=0
+    floresB:=0
+    repetir 4
+      RecibirMensaje(quien,*)
+      si (quien=11)
+        RecibirMensaje(flores,robot1A)
+      sino
+        si (quien=12)
+          RecibirMensaje(flores,robot2A)
+        sino
+          si (quien=21)
+            RecibirMensaje(flores,robot1B)
+          sino
+            RecibirMensaje(flores,robot2B)
+      si (quien=11)|(quien=12)
+        floresA:=floresA + flores
+      sino
+        floresB:=floresB + flores
+    repetir 4
+      RecibirMensaje(finalizo,*)
+    si (floresA>floresB)
+      Informar('Ganador_equipo_A_',floresA)
+    sino
+      Informar('Ganador_equipo_B_',floresB)
+  fin
+variables
+  robot1A,robot1B,robot2A,robot2B:tipoCompetidor
+  fiscalizador:tipoFiscalizador
+comenzar
+  AsignarArea (robot1A,areaEquipoA)
+  AsignarArea (robot2A,areaEquipoA)
+  AsignarArea (robot1A,deposito)
+  AsignarArea (robot2A,deposito)
+  AsignarArea (robot1B,areaEquipoB)
+  AsignarArea (robot2B,areaEquipoB)
+  AsignarArea (robot1B,deposito)
+  AsignarArea (robot2B,deposito)
+  AsignarArea (fiscalizador,areaFiscalizador)
+  AsignarArea (fiscalizador,deposito)
+  Iniciar (robot1A,1,1)
+  Iniciar (robot2A,11,10)
+  Iniciar (robot1B,13,1)
+  Iniciar (robot2B,23,10)
+  Iniciar (fiscalizador,30,1)
+fin

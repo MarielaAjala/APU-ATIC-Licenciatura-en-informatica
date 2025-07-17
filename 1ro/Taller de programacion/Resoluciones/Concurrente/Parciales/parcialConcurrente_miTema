@@ -1,0 +1,111 @@
+programa parcialConcurrente_miTema
+procesos
+  proceso enviarIds
+  comenzar
+    EnviarMensaje(1,worker1)
+    EnviarMensaje(2,worker2)
+    EnviarMensaje(3,worker3)
+  fin
+  proceso buscarUnaFlor
+  comenzar
+    Pos(50,50)
+    tomarFlor
+    Pos(100,100)
+    depositarFlor
+  fin
+  proceso tomarFlores(E cantFlores:numero)
+  comenzar
+    repetir cantFlores
+      buscarUnaFlor
+  fin
+  proceso depositarFlores(E cantFlores:numero)
+  variables
+    aveOrigen,caOrigen:numero
+  comenzar
+    aveOrigen:=PosAv
+    caOrigen:=PosCa
+    BloquearEsquina(50,50)
+    Pos(50,50)
+    repetir cantFlores
+      depositarFlor
+    Pos(aveOrigen,caOrigen)
+    LiberarEsquina(50,50)
+  fin
+  proceso cuadrado(E lado:numero;ES flores:numero)
+  comenzar
+    repetir 4
+      repetir lado
+        mientras HayFlorEnLaEsquina
+          tomarFlor
+          flores:=flores+1
+        mover
+      derecha
+  fin
+  proceso ubicarseParaSigCuadrado(E lado:numero)
+  comenzar
+    Pos(PosAv,PosCa+lado+1)
+  fin
+areas
+  areaWorker1: AreaP (1,1,6,20)
+  areaWorker2: AreaP (7,1,12,20)
+  areaWorker3: AreaP (13,1,18,20)
+  areaCoordinador: AreaP (100,100,100,100)
+  deposito: AreaC (50,50,50,50)
+robots
+  robot tipoWorker
+  variables
+    floresJuntadas,lado,quienSoy:numero
+    seguir:boolean
+  comenzar
+    floresJuntadas:=0
+    RecibirMensaje(quienSoy,coordinador)
+    repetir 3
+      EnviarMensaje(quienSoy,coordinador)
+      RecibirMensaje(lado,coordinador)
+      cuadrado(lado,floresJuntadas)
+      ubicarseParaSigCuadrado(lado)
+    depositarFlores (floresJuntadas)
+    RecibirMensaje(seguir,coordinador)
+    EnviarMensaje(floresJuntadas,coordinador)
+  fin
+  robot tipoCoordinador
+  variables
+    flores,totalFlores,lado,quien: numero
+  comenzar
+    enviarIds
+    totalFlores:=0
+    repetir 9
+      Random(lado,1,5)
+      RecibirMensaje(quien,*)
+      si (quien=1)
+        EnviarMensaje(lado,worker1)
+      sino
+        si (quien=2)
+          EnviarMensaje(lado,worker2)
+        sino
+          EnviarMensaje(lado,worker3)
+    EnviarMensaje(V,worker1) {Para sincronizarlos}
+    EnviarMensaje(V,worker2)
+    EnviarMensaje(V,worker3)
+    repetir 3
+      RecibirMensaje(flores,*)
+      totalFlores:=totalFlores+flores
+    tomarFlores(totalFlores)
+  fin
+variables
+  worker1,worker2,worker3:tipoWorker
+  coordinador:tipoCoordinador
+comenzar
+  AsignarArea (worker1,areaWorker1)
+  AsignarArea (worker1,deposito)
+  AsignarArea (worker2,areaWorker2)
+  AsignarArea (worker2,deposito)
+  AsignarArea (worker3,areaWorker3)
+  AsignarArea (worker3,deposito)
+  AsignarArea (coordinador,areaCoordinador)
+  AsignarArea (coordinador,deposito)
+  Iniciar (worker1,1,1)
+  Iniciar (worker2,7,1)
+  Iniciar (worker3,13,1)
+  Iniciar (coordinador,100,100)
+fin

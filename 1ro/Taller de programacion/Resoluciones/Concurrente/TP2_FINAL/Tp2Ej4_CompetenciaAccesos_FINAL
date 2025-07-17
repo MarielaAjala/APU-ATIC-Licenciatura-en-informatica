@@ -1,0 +1,172 @@
+programa Tp2Ej4_CompetenciaAccesos_FINAL
+procesos
+  proceso posicionar
+  variables
+    avenida,calle:numero
+  comenzar
+    Random(avenida,25,75)
+    Random(calle,25,75)
+    Pos(avenida,calle)
+  fin
+  proceso juntarFlores
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+  fin
+  proceso juntarPapeles
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+  fin
+  proceso limpiarEsquina
+  variables
+    avenidaOrigen,calleOrigen:numero
+  comenzar
+    avenidaOrigen:=PosAv
+    calleOrigen:=PosCa
+    posicionar
+    juntarFlores
+    juntarPapeles    
+    Pos(avenidaOrigen,calleOrigen)
+    EnviarMensaje(V,fiscalizador)
+  fin
+  proceso enviarMensajes(E finCompetencia:boolean)
+  comenzar
+    EnviarMensaje(finCompetencia,recolector1)
+    EnviarMensaje(finCompetencia,recolector2)
+    EnviarMensaje(finCompetencia,recolector3)
+    EnviarMensaje(finCompetencia,recolector4)
+  fin
+  proceso elegirSorteado(ES cant1:numero;ES cant2:numero;ES cant3:numero;ES cant4:numero)
+  variables
+    numRobot:numero
+    final:boolean
+  comenzar
+    Random(numRobot,1,4)
+    si (numRobot=1) {Le envio V al elegido para recolectar}
+      EnviarMensaje(V,recolector1){y le envio F a los que no}
+      EnviarMensaje(F,recolector2)
+      EnviarMensaje(F,recolector3)
+      EnviarMensaje(F,recolector4)
+      cant1:=cant1+1
+      RecibirMensaje(final,recolector1) 
+      {El robot elegido debe avisar cuando este de nuevo en su lugar}
+    sino
+      si(numRobot=2)
+        EnviarMensaje(F,recolector1)
+        EnviarMensaje(V,recolector2)
+        EnviarMensaje(F,recolector3)
+        EnviarMensaje(F,recolector4)
+        cant2:=cant2+1
+        RecibirMensaje(final,recolector2) 
+      sino
+        si(numRobot=3)
+          EnviarMensaje(V,recolector3)
+          EnviarMensaje(F,recolector1)
+          EnviarMensaje(F,recolector2)
+          EnviarMensaje(F,recolector4)
+          cant3:=cant3+1
+          RecibirMensaje(final,recolector3)
+        sino
+          EnviarMensaje(V,recolector4)
+          EnviarMensaje(F,recolector1)
+          EnviarMensaje(F,recolector2)
+          EnviarMensaje(F,recolector3)
+          cant4:=cant4+1
+          RecibirMensaje(final,recolector4)
+  fin
+areas
+  areaRestringida: AreaPC (25,25,75,75)
+  areaRecolector1: AreaP (25,1,25,1)
+  areaRecolector2: AreaP (30,1,30,1)
+  areaRecolector3: AreaP (35,1,35,1)
+  areaRecolector4: AreaP (40,1,40,1)
+  areaFiscal: AreaP (1,1,1,1)
+robots
+  robot Recolector
+  variables
+    avenida,calle,avenidaOrigen,calleOrigen:numero
+    meTocaLimpiar,terminoCompetencia,gane: boolean
+  comenzar
+    RecibirMensaje(terminoCompetencia,fiscalizador)
+    mientras(~ terminoCompetencia )
+      RecibirMensaje(meTocaLimpiar,fiscalizador)
+      si(meTocaLimpiar)
+        limpiarEsquina    
+      RecibirMensaje(terminoCompetencia,fiscalizador)
+    RecibirMensaje(gane,fiscalizador)
+    si (gane)
+      Pos(50,50)
+  fin
+  robot Fiscalizador
+  variables
+    numRobotMax,cant1,cant2,cant3,cant4: numero
+    terminoCompetencia:boolean
+  comenzar
+    cant1:=0
+    cant2:=0
+    cant3:=0
+    cant4:=0
+    repetir 10
+      terminoCompetencia:= F
+      enviarMensajes(terminoCompetencia)
+      elegirSorteado(cant1,cant2,cant3,cant4)
+    terminoCompetencia:= V
+    enviarMensajes(terminoCompetencia)
+    si (cant1>cant2)&(cant1>cant3)&(cant1>cant4)
+      numRobotMax:=1
+    sino
+      si (cant2>cant3)&(cant2>cant4)
+        numRobotMax:=2
+      sino
+        si (cant3>cant4)
+          numRobotMax:=3
+        sino
+          numRobotMax:=4
+    Informar('cant_1',cant1)
+    Informar('cant_2',cant2)
+    Informar('cant_3',cant3)
+    Informar('cant_4',cant4)
+    si (numRobotMax = 1) {Le aviso al robot ganador que lo es}
+      EnviarMensaje(V,recolector1)
+      EnviarMensaje(F,recolector2)
+      EnviarMensaje(F,recolector3)
+      EnviarMensaje(F,recolector4)
+    sino
+      si (numRobotMax = 2)
+        EnviarMensaje(F,recolector1)
+        EnviarMensaje(V,recolector2)
+        EnviarMensaje(F,recolector3)
+        EnviarMensaje(F,recolector4)
+      sino
+        si (numRobotMax = 3)
+          EnviarMensaje(F,recolector1)
+          EnviarMensaje(F,recolector2)
+          EnviarMensaje(V,recolector3)
+          EnviarMensaje(F,recolector4)
+        sino 
+          EnviarMensaje(F,recolector1)
+          EnviarMensaje(F,recolector2)
+          EnviarMensaje(F,recolector3)
+          EnviarMensaje(V,recolector4)
+    Informar ('Robot_ganador',numRobotMax)
+  fin
+variables
+  recolector1,recolector2,recolector3,recolector4: Recolector
+  fiscalizador: Fiscalizador
+comenzar
+  AsignarArea(recolector1,areaRecolector1)
+  AsignarArea(recolector2,areaRecolector2)
+  AsignarArea(recolector3,areaRecolector3)
+  AsignarArea(recolector4,areaRecolector4)
+  AsignarArea(recolector1,areaRestringida)
+  AsignarArea(recolector2,areaRestringida)
+  AsignarArea(recolector3,areaRestringida)
+  AsignarArea(recolector4,areaRestringida)
+  AsignarArea(fiscalizador,areaFiscal)
+  Iniciar(recolector1,25,1)
+  Iniciar(recolector2,30,1)
+  Iniciar(recolector3,35,1)
+  Iniciar(recolector4,40,1)
+  Iniciar(fiscalizador,1,1)
+fin

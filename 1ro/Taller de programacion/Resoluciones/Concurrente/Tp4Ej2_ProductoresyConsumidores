@@ -1,0 +1,104 @@
+programa Tp4Ej2_ProductoresyConsumidores
+procesos
+  proceso tomarCantPapelesDeDepot (ES cant:numero)
+  variables
+    junte,aveOrigen,calleOrigen:numero
+    pude:boolean
+  comenzar
+    junte:=0
+    aveOrigen:=PosAv
+    calleOrigen:=PosCa
+    BloquearEsquina (50,50)
+    Pos (50,50)
+    mientras (junte<cant)& (HayPapelEnLaEsquina)
+      tomarPapel
+      junte:=junte+1
+    pude:=(junte=cant)
+    si (~pude)
+      repetir junte
+        depositarPapel    
+      cant:=0
+    Pos (aveOrigen,calleOrigen)
+    LiberarEsquina(50,50)
+  fin
+  proceso depositarCantPapelesEnDepot (E cant: numero)
+  variables
+    deposite,aveOrigen,calleOrigen:numero 
+  comenzar
+    deposite:=0
+    aveOrigen:=PosAv
+    calleOrigen:=PosCa
+    BloquearEsquina (50,50)
+    Pos (50,50)
+    mientras (deposite<cant)&(HayPapelEnLaBolsa)
+      depositarPapel
+      deposite:=deposite+1
+    Pos(aveOrigen,calleOrigen)
+    LiberarEsquina (50,50)      
+  fin
+  proceso recorrido
+  variables
+    tome:numero
+  comenzar
+    tome:=0
+    mientras (PosCa<100)
+      mientras ((HayPapelEnLaEsquina)&(tome<5))
+        tomarPapel 
+        tome:=tome+1
+      si (tome=5)
+        depositarCantPapelesEnDepot(tome)
+        tome:=0
+      si ~HayPapelEnLaEsquina
+        mover  
+    mientras ((HayPapelEnLaEsquina)&(tome<5)) {PosCa=100}
+      tomarPapel
+      tome:=tome+1
+      si (tome=5)
+        depositarCantPapelesEnDepot(tome)
+        tome:=0
+    si (tome>0)
+      depositarCantPapelesEnDepot(tome)
+  fin
+areas
+  areaProductor1: AreaP (5,1,5,100)
+  areaProductor2: AreaP (10,1,10,100)
+  deposito: AreaC (50,50,50,50)
+  areaConsumidor1: AreaP (11,1,11,1)
+  areaConsumidor2: AreaP (12,1,12,1)
+robots
+  robot tipoProductor
+  comenzar
+    recorrido
+  fin
+  robot tipoConsumidor
+  variables
+    fallidos,cantSolicitada:numero
+  comenzar
+    fallidos:=0
+    Random(cantSolicitada,2,5)
+    mientras (fallidos<8)
+      tomarCantPapelesDeDepot(cantSolicitada)
+      si (cantSolicitada=0)
+        fallidos:=fallidos+1
+      sino
+        fallidos:=0
+      Random(cantSolicitada,2,5)
+  fin
+variables
+  consumidor1,consumidor2:tipoConsumidor
+  productor1,productor2:tipoProductor
+comenzar
+  AsignarArea (consumidor1, areaConsumidor1)
+  AsignarArea (consumidor1, deposito)
+  AsignarArea (consumidor2, areaConsumidor2)
+  AsignarArea (consumidor2, deposito)
+  AsignarArea (productor1,areaProductor1)
+  AsignarArea (productor1,deposito)
+  AsignarArea (productor2,areaProductor2)
+  AsignarArea (productor2,deposito)
+  Iniciar (productor1,5,1)
+  Iniciar (productor2,10,1)
+  Iniciar (consumidor1,11,1)
+  Iniciar (consumidor2,12,1)
+fin
+  

@@ -1,0 +1,108 @@
+programa Tp5Ej4_FINAL
+procesos
+  proceso enviarIds
+  comenzar
+    EnviarMensaje(1,florero1)
+    EnviarMensaje(2,florero2)
+    EnviarMensaje(3,florero3)
+  fin
+  proceso informarGanador(E quien:numero)
+  comenzar
+    EnviarMensaje(quien,florero1)
+    EnviarMensaje(quien,florero2)
+    EnviarMensaje(quien,florero3)
+  fin
+  proceso informarUbicacion(E quien:numero;E avenida:numero;E calle:numero)
+  comenzar
+    si (quien=1)
+      EnviarMensaje (avenida,florero1)
+      EnviarMensaje (calle,florero1)
+    sino
+      si (quien=2)
+        EnviarMensaje(avenida,florero2)
+        EnviarMensaje(calle,florero2)
+      sino
+        EnviarMensaje(avenida,florero3)
+        EnviarMensaje(calle,florero3)
+  fin
+  proceso juntarFlores(E aveOrigen:numero;E calleOrigen:numero;E ave:numero;E call:numero;ES cantidad:numero)
+  comenzar
+    BloquearEsquina(ave,call)
+    Pos(ave,call)
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      cantidad:=cantidad+1
+    Pos(aveOrigen,calleOrigen)
+    LiberarEsquina(ave,call)
+  fin
+  proceso depositarFlores(E aveOrigen:numero;E calleOrigen:numero)
+  comenzar
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    mientras (HayFlorEnLaBolsa)
+      depositarFlor 
+    Pos(aveOrigen,calleOrigen)
+    LiberarEsquina(10,10)
+  fin
+areas
+  areaFlorero1: AreaP (1,1,1,1)
+  areaFlorero2: AreaP (2,1,2,1)
+  areaFlorero3: AreaP (3,1,3,1)
+  areaFiscalizador: AreaP (4,1,4,1)
+  areaCompetencia: AreaPC (40,40,60,60)
+  deposito: AreaC (10,10,10,10)
+robots
+  robot tipoFiscalizador
+  variables
+    total,cantFlores,quien,avenida,calle: numero
+  comenzar
+    enviarIds
+    total:=0
+    cantFlores:=0
+    repetir 8
+      Random(avenida,40,60)
+      Random(calle,40,60)
+      Random(quien,1,3)
+      informarGanador(quien)
+      informarUbicacion(quien,avenida,calle)
+    repetir 3
+      RecibirMensaje (cantFlores,*)
+      total:=total+cantFlores
+    Informar('Cantidad_total_de_flores_juntadas_',total)
+  fin
+  robot tipoFlorero
+  variables
+    quienSoy,cant,aveOrigen,calleOrigen,av,ca,aQuienLeToca: numero
+  comenzar
+    aveOrigen:=PosAv
+    calleOrigen:=PosCa
+    cant:=0
+    RecibirMensaje(quienSoy,fiscalizador)
+    repetir 8
+      RecibirMensaje (aQuienLeToca,fiscalizador)
+      si (aQuienLeToca=quienSoy)
+        RecibirMensaje(av,fiscalizador)
+        RecibirMensaje(ca,fiscalizador)
+        juntarFlores(aveOrigen,calleOrigen,av,ca,cant)
+    depositarFlores(aveOrigen,calleOrigen)
+    EnviarMensaje(cant,fiscalizador)
+  fin
+variables
+  florero1,florero2,florero3:tipoFlorero
+  fiscalizador:tipoFiscalizador
+comenzar
+  AsignarArea (florero1,areaFlorero1)
+  AsignarArea (florero1,areaCompetencia)
+  AsignarArea (florero1,deposito)
+  AsignarArea (florero2,areaFlorero2)
+  AsignarArea (florero2,areaCompetencia)
+  AsignarArea (florero2,deposito)
+  AsignarArea (florero3,areaFlorero3)
+  AsignarArea (florero3,areaCompetencia)
+  AsignarArea (florero3,deposito)  
+  AsignarArea (fiscalizador,areaFiscalizador)
+  Iniciar(florero1,1,1)
+  Iniciar(florero2,2,1)
+  Iniciar(florero3,3,1)
+  Iniciar(fiscalizador,4,1)
+fin

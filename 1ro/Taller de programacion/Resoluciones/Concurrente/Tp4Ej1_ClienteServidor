@@ -1,0 +1,115 @@
+programa Tp4Ej1_ClienteServidor
+procesos
+  proceso juntarFlores
+  comenzar
+    mientras HayFlorEnLaEsquina 
+      tomarFlor
+  fin
+  proceso depositarFlores
+  comenzar
+    mientras ((HayFlorEnLaBolsa) & (PosCa<100))
+      depositarFlor 
+      mover
+  fin
+areas
+  areaServidor: AreaP (100,100,100,100)
+  areaCliente1: AreaPC (1,1,1,100)
+  areaCliente2: AreaPC (2,1,2,100)
+  areaCliente3: AreaPC (3,1,3,100)
+robots
+  robot tipoCliente
+  variables
+    quienSoy,cantF,avenida,calleSig: numero
+    ack: boolean
+  comenzar
+    RecibirMensaje(quienSoy,servidor)
+    mientras  (PosCa<100)
+      Random (cantF,1,4)
+      EnviarMensaje(quienSoy,servidor)
+      EnviarMensaje(cantF,servidor)
+      si (cantF<>0)
+        avenida:=PosAv
+        Informar('Avenida_',avenida)
+        calleSig:=PosCa+1
+        Informar('CalleSig_',calleSig)
+        EnviarMensaje(avenida,servidor)
+        EnviarMensaje(calleSig,servidor)
+        RecibirMensaje(ack,servidor)
+        Informar('Recibi_ack_',ack)
+        mover
+        juntarFlores
+        Pos(avenida,calleSig-1)
+        depositarFlores
+    si PosCa=100
+      EnviarMensaje(quienSoy,servidor)
+      EnviarMensaje (0,servidor)
+  fin
+  robot tipoServidor
+  variables
+    quien,cantFlores,terminaron,deposite,avenida,calle:numero
+  comenzar
+    juntarFlores
+    EnviarMensaje(1,cliente1)
+    EnviarMensaje(2,cliente2)
+    EnviarMensaje(3,cliente3)
+    terminaron:=0
+    mientras (terminaron <3)
+      RecibirMensaje(quien,*)
+      deposite:=0
+      si (quien = 1)
+        RecibirMensaje(cantFlores,cliente1)
+        si (cantFlores<>0)
+          RecibirMensaje(avenida,cliente1)
+          RecibirMensaje(calle,cliente1)
+          Pos(avenida,calle)
+          mientras ((HayFlorEnLaBolsa) & (deposite<cantFlores))
+            depositarFlor 
+            deposite:=deposite+1
+          Pos(100,100)
+          EnviarMensaje(V,cliente1)
+        sino 
+          terminaron:=terminaron+1
+      sino
+        si (quien = 2)
+          RecibirMensaje (cantFlores,cliente2)
+          si (cantFlores=0)
+            terminaron:=terminaron+1
+          sino
+            RecibirMensaje(avenida,cliente2)
+            RecibirMensaje(calle,cliente2)
+            Pos(avenida,calle)
+            mientras ((HayFlorEnLaBolsa) & (deposite<cantFlores))
+              depositarFlor
+              deposite:=deposite+1
+            Pos(100,100)
+            EnviarMensaje(V,cliente2)
+        sino
+          RecibirMensaje(cantFlores,cliente3)
+          si cantFlores=0
+            terminaron:=terminaron+1
+          sino
+            RecibirMensaje(avenida,cliente3)
+            RecibirMensaje(calle,cliente3)
+            Pos(avenida,calle)
+            mientras ((HayFlorEnLaBolsa) & (deposite<cantFlores))
+              depositarFlor
+              deposite:=deposite+1
+            Pos(100,100)
+            EnviarMensaje(V,cliente3)
+  fin
+variables
+  cliente1,cliente2,cliente3:tipoCliente
+  servidor:tipoServidor
+comenzar
+  AsignarArea (servidor,areaServidor)
+  AsignarArea(servidor,areaCliente1)
+  AsignarArea(servidor,areaCliente2)
+  AsignarArea(servidor,areaCliente3)
+  AsignarArea (cliente1,areaCliente1)
+  AsignarArea(cliente2,areaCliente2)
+  AsignarArea(cliente3,areaCliente3)
+  Iniciar(servidor,100,100)
+  Iniciar (cliente1,1,1)
+  Iniciar(cliente2,2,1)
+  Iniciar(cliente3,3,1)
+fin

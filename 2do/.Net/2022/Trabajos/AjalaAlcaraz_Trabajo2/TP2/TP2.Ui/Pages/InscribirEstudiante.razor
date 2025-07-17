@@ -1,0 +1,131 @@
+@page "/inscribirestudiante"
+@inject ObtenerEstudianteUseCase ObtenerEstudianteUseCase
+@inject NavigationManager Navegador;
+@inject AgregarInscripcionUseCase AgregarInscripcionUseCase
+@inject ObtenerCursoUseCase ObtenerCursoUseCase
+@inject IJSRuntime JsRuntime;
+@using Institucion;
+
+<h1>fecha: @dia</h1>
+<table class="table">
+    <thead>
+        <tr>
+                <th>ID ESTUDIANTES</th>
+                <th>CURSO DISPONIBLES</th>
+        </tr>  
+</thead>
+
+<td>
+<EditForm Model="@estudiante">
+   <div>
+    <InputSelect Value="@estu"
+        ValueChanged=@((string estu)=> cambiarEstudiante(estu))
+        ValueExpression="@(() => estu)">
+        <option value="">SELECCIONES UN ESTUDIANTE</option>
+        @foreach (var item in ListaEstudiantes)
+        {
+            <option selected value="@item.Id"> @item.Dni @item.Nombre </option>
+        }    
+    </InputSelect>
+    </div>
+</EditForm>
+</td>
+
+<td>
+<EditForm Model="@estudiante">
+   <div>
+    <InputSelect Value="@cur"
+        ValueChanged=@((string cur)=> cambiarCurso(cur))
+        ValueExpression="@(() => cur)">
+        <option value="">SELECCIONES UN Cur</option>
+        @foreach (var item in ListaCursos)
+        {
+            <option selected value="@item.Id"> @item.Titulo @item.FechaDeInicio </option>
+        }    
+    </InputSelect>
+    </div>
+</EditForm>
+</td>
+
+</table>
+
+<button class="btn btn-primary" @onclick="Agregar">Agregar</button>
+@code {
+ string dia= DateTime.Now.ToString("dd/MM/yyyy");
+ private string estu="";
+ Estudiante estudiante= new Estudiante();
+ private string cur= "";
+ Curso curso= new Curso();
+ List<Estudiante> ListaEstudiantes = new List<Estudiante>();
+ List<Curso> ListaCursos = new List<Curso>();
+ Estudiante EstudianteSeleccionado= new Estudiante();
+ Curso CursoSeleccionado= new Curso();
+ public bool confirmado;
+
+ void cambiarEstudiante(string c){
+    estu= c;
+}
+void cambiarCurso(string d){
+    cur=d;
+}
+
+  protected override void OnInitialized()
+ {
+    using(var db=new EscuelaContext()){
+    foreach (var item in db.Estudiantes)
+    {       
+            ListaEstudiantes.Add(item);
+
+    }
+
+    foreach (var item in db.Cursos)
+    {
+            if(item.FechaDeInicio > DateTime.Now){
+                ListaCursos.Add(item);
+            }
+
+    }
+    }
+ }
+
+    async Task Agregar()
+    {       
+            if((estu!= "") && (cur != ""))
+            {
+                Estudiante? estudianteA = ObtenerEstudianteUseCase.Ejecutar(Int32.Parse(estu));
+                Curso? cursoA = ObtenerCursoUseCase.Ejecutar(Int32.Parse(cur));
+                #nullable disable
+                confirmado = await JsRuntime.InvokeAsync<bool>("confirm", $"Desea agregar al estudiante {estudianteA.Nombre} al curso {cursoA.Titulo}");
+                Inscripcion ins = new Inscripcion();
+                #nullable enable
+                if (confirmado)
+                {
+                    using (var db= new EscuelaContext()){
+                    bool ok=true;
+                    foreach(var l in db.Inscripciones)
+                    {
+                        if((l.CursoId == cursoA.Id) && (l.EstudianteId == estudianteA.Id))
+                        {
+                            ok=false;
+                        }    
+                    }
+                    if(ok)
+                    {
+                        ins.CursoId= cursoA.Id;
+                        ins.EstudianteId= estudianteA.Id;
+                        ins.FechaDeInscripcion= DateTime.Today;
+                        AgregarInscripcionUseCase.Ejecutar(ins);
+                    }
+                    else
+                    {
+                        await JsRuntime.InvokeAsync<bool>("confirm", $"{estudianteA.Nombre} YA ESTA INSCRIPTO AL CURSO DE  {cursoA.Titulo}");
+                    }
+                }
+            }      
+            }
+            else{
+                await JsRuntime.InvokeAsync<bool>("confirm", $"DEBE SELECCIONAR ID Y CURSO");
+            } 
+            Navegador.NavigateTo("listadoinscripciones");
+        }
+ } 

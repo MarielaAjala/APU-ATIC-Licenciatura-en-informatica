@@ -1,0 +1,67 @@
+programa TP1Ej4_limpiarCiudad
+procesos
+  proceso quitarPapeles
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+  fin
+  proceso quitarFlores
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+  fin
+  proceso limpiarAvenidaDeFlores
+  comenzar
+    repetir 99
+      quitarFlores
+      mover
+    quitarFlores
+  fin
+  proceso limpiarAvenidaDePapeles
+  comenzar
+    repetir 99
+      quitarPapeles
+      mover
+    quitarPapeles
+  fin
+areas
+  area1: AreaP (1,1,25,100)
+  area2: AreaP (26,1,50,100)
+  area3: AreaP (51,1,75,100)
+  area4: AreaP (76,1,100,100)
+robots
+  robot tipo1
+  comenzar
+    repetir 24
+      limpiarAvenidaDeFlores
+      Pos(PosAv+1,1)
+    limpiarAvenidaDeFlores
+    Pos (PosAv+26,1)
+    repetir 24
+      limpiarAvenidaDeFlores
+      Pos(PosAv+1,1)
+    limpiarAvenidaDeFlores
+  fin 
+  robot tipo2
+  comenzar
+    repetir 24
+      limpiarAvenidaDePapeles
+      Pos(PosAv+1,1)
+    limpiarAvenidaDePapeles
+    Pos (PosAv+26,1)
+    repetir 24
+      limpiarAvenidaDePapeles
+      Pos(PosAv+1,1)
+    limpiarAvenidaDePapeles
+  fin 
+variables
+  robot1: tipo1
+  robot2: tipo2
+comenzar
+  AsignarArea (robot1,area1)
+  AsignarArea (robot1,area3)
+  AsignarArea (robot2,area2)
+  AsignarArea (robot2,area4)
+  Iniciar (robot1,1,1)
+  Iniciar (robot2,26,1)
+fin

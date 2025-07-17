@@ -1,0 +1,66 @@
+@page "/listadoinscripciones"
+@inject ListarInscripcionesUseCase ListarInscripcionesUseCase
+@inject IJSRuntime JsRuntime;
+@inject EliminarInscripcionUseCase EliminarInscripcionUseCase
+@inject ObtenerCursoUseCase ObtenerCursoUseCase
+@inject NavigationManager Navegador
+ <tr> INSCRIPCIONES</tr>
+<table class="table">
+   
+    <thead>
+        <tr>
+            <th>ID INSCRIPCION</th>
+            <th>ID CURSO</th>
+            <th>ID ESTUDIANTE</th>
+            <th>TITULO</th>
+            <th>FECHA DE INICIO</th>
+        </tr>
+    </thead>
+ <tbody>
+    @foreach (var inscripcion in _lista)
+    {
+        <tr>
+            <td>@inscripcion.Id</td>
+            <td>@inscripcion.CursoId</td>
+            <td>@inscripcion.EstudianteId</td>
+            <td>@verTitulo(inscripcion.CursoId)</td>
+            <td>@inscripcion.FechaDeInscripcion</td>
+            <td>
+                <button class="btn btn-danger" @onclick="()=>EliminarInscripcion(inscripcion.Id)">
+                    <i class="oi oi-trash"></i>
+                </button>
+            </td>
+        </tr>
+    }
+ </tbody>
+ </table>
+@code {
+
+ List<Inscripcion> _lista = new List<Inscripcion>();
+ protected override void OnInitialized()
+ {
+    _lista = ListarInscripcionesUseCase.Ejecutar();
+ }
+ string? verTitulo(int id){
+    string curS= "";
+    Curso? cur= ObtenerCursoUseCase.Ejecutar(id);
+    if(cur != null){
+     return cur.Titulo;
+    }
+    return curS;
+ }
+ async Task EliminarInscripcion(int id)
+ {
+    bool confirmado = await JsRuntime.InvokeAsync<bool>("confirm", $"Desea eliminar el Inscripcion {id}?");
+    if (confirmado)
+    {
+        EliminarInscripcionUseCase.Ejecutar(id);
+        _lista = ListarInscripcionesUseCase.Ejecutar();
+    }
+ }
+ void ModificarInscripcion(int id)
+ {
+    Navegador.NavigateTo($"inscripcion/{id}");
+ }
+
+}

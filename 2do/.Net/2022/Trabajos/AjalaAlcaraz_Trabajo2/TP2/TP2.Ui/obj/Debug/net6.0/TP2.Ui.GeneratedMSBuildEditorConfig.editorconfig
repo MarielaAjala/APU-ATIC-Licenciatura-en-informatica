@@ -1,0 +1,108 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = TP2.Ui
+build_property.RootNamespace = TP2.Ui
+build_property.ProjectDir = C:\Users\marie\Downloads\Informatica\2do\.Net\2022\Trabajos\AjalaAlcaraz_Trabajo2\TP2\TP2.UI\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\marie\Downloads\Informatica\2do\.Net\2022\Trabajos\AjalaAlcaraz_Trabajo2\TP2\TP2.UI
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/AgregarCurso.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWdyZWdhckN1cnNvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/AgregarEstudiante.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWdyZWdhckVzdHVkaWFudGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/Cursos.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3Vyc29zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/EditarCurso.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdGFyQ3Vyc28ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/EditarEstudiante.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdGFyRXN0dWRpYW50ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/Estudiantes.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXN0dWRpYW50ZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/EstudiantesEnCurso.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXN0dWRpYW50ZXNFbkN1cnNvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/EstudiantesFinalizados.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXN0dWRpYW50ZXNGaW5hbGl6YWRvcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/EstudiantesInscriptos.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXN0dWRpYW50ZXNJbnNjcmlwdG9zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/FetchData.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/InscribirEstudiante.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5zY3JpYmlyRXN0dWRpYW50ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/Inscripciones.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5zY3JpcGNpb25lcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/InscripcionesEstudiante.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5zY3JpcGNpb25lc0VzdHVkaWFudGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-um4toukyd2
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-6mvt4ipe6g
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/marie/Downloads/Informatica/2do/.Net/2022/Trabajos/AjalaAlcaraz_Trabajo2/TP2/TP2.UI/Pages/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0xheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

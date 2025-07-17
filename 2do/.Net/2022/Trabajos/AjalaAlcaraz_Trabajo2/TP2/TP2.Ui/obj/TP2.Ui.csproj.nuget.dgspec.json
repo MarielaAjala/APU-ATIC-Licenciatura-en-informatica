@@ -1,0 +1,184 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.UI\\TP2.Ui.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.Aplicacion\\TP2.Aplicacion.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.Aplicacion\\TP2.Aplicacion.csproj",
+        "projectName": "TP2.Aplicacion",
+        "projectPath": "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.Aplicacion\\TP2.Aplicacion.csproj",
+        "packagesPath": "C:\\Users\\marie\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.Aplicacion\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\marie\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.Repositorios\\TP2.Repositorios.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.Repositorios\\TP2.Repositorios.csproj",
+        "projectName": "TP2.Repositorios",
+        "projectPath": "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.Repositorios\\TP2.Repositorios.csproj",
+        "packagesPath": "C:\\Users\\marie\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.Repositorios\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\marie\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.Aplicacion\\TP2.Aplicacion.csproj": {
+                "projectPath": "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.Aplicacion\\TP2.Aplicacion.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.UI\\TP2.Ui.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.UI\\TP2.Ui.csproj",
+        "projectName": "TP2.Ui",
+        "projectPath": "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.UI\\TP2.Ui.csproj",
+        "packagesPath": "C:\\Users\\marie\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.UI\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\marie\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.Aplicacion\\TP2.Aplicacion.csproj": {
+                "projectPath": "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.Aplicacion\\TP2.Aplicacion.csproj"
+              },
+              "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.Repositorios\\TP2.Repositorios.csproj": {
+                "projectPath": "C:\\Users\\marie\\Downloads\\Informatica\\2do\\.Net\\2022\\Trabajos\\AjalaAlcaraz_Trabajo2\\TP2\\TP2.Repositorios\\TP2.Repositorios.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+@page "/estudiante"
+@inject ObtenerEstudianteUseCase ObtenerEstudianteUseCase
+@inject ModificarEstudianteUseCase ModificarEstudianteUseCase
+@inject NavigationManager Navegador;
+@inject AgregarEstudianteUseCase AgregarEstudianteUseCase
+@inject ObtenerEstudianteDniUseCase ObtenerEstudianteDniUseCase
+@inject IJSRuntime JsRuntime;
+
+@if (_esNuevoEstudiante)
+{
+   <h3>Agregando un nuevo Estudiante</h3>
+}
+else{
+     <th>@mensaje</th>
+}
+
+<input placeholder="Dni" @bind="_estudiante.Dni" class="form-control">
+<input placeholder="Nombre" @bind="_estudiante.Nombre" class="form-control">
+<input placeholder="Apellido" @bind="_estudiante.Apellido" class="form-control">
+<input placeholder="Email" @bind="_estudiante.Email" class="form-control">
+<button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+@code {
+ Estudiante _estudiante = new Estudiante();
+ [Parameter] public int id { get; set; }
+ bool _esNuevoEstudiante;
+ string mensaje="";
+ protected override void OnParametersSet()
+ {    
+      
+ }
+
+async Task Aceptar()
+ {
+      var estu_hallado = ObtenerEstudianteDniUseCase.Ejecutar(_estudiante.Dni);
+      if (estu_hallado == null)
+      {
+         _esNuevoEstudiante=true;
+      }
+      else{  _estudiante = estu_hallado;}
+    Console.WriteLine(_esNuevoEstudiante);
+    if (_esNuevoEstudiante)
+   {  if(_estudiante.Dni != 0){
+        AgregarEstudianteUseCase.Ejecutar(_estudiante);
+        Navegador.NavigateTo("/listadoestudiantes"); 
+      }
+      else{
+        await JsRuntime.InvokeAsync<bool>("confirm", "DEBE INGRESAR UN DNI DISTINTO DE 0");
+        Navegador.NavigateTo("/listadoestudiantes");
+      }
+   }
+   else{
+        await JsRuntime.InvokeAsync<bool>("confirm", "EL DNI YA EXISTE EN LA BASE DE DATOS");
+        Navegador.NavigateTo("/listadoestudiantes"); 
+   }
+ } 
+
+
+}

@@ -1,0 +1,49 @@
+@page "/estudiante/{id:int}"
+@inject ObtenerEstudianteUseCase ObtenerEstudianteUseCase
+@inject ModificarEstudianteUseCase ModificarEstudianteUseCase
+@inject NavigationManager Navegador;
+@inject AgregarEstudianteUseCase AgregarEstudianteUseCase
+
+@if (_esNuevoEstudiante)
+{
+   <h3>Agregando un nuevo Estudiante</h3>
+}
+else
+{
+   <h3>Modificando al Estudiante "@_estudiante.Nombre"</h3>
+}
+<input placeholder="Dni" @bind="_estudiante.Dni" class="form-control">
+<input placeholder="Nombre" @bind="_estudiante.Nombre" class="form-control">
+<input placeholder="Apellido" @bind="_estudiante.Apellido" class="form-control">
+<input placeholder="Email" @bind="_estudiante.Email" class="form-control">
+<button class="btn btn-primary" @onclick="Aceptar">Aceptar</button>
+@code {
+ Estudiante _estudiante = new Estudiante();
+ [Parameter] public int id { get; set; }
+ bool _esNuevoEstudiante=true;
+ protected override void OnParametersSet()
+ {
+
+      var estu_hallado = ObtenerEstudianteUseCase.Ejecutar(id);
+      if (estu_hallado != null)
+      {
+         _estudiante = estu_hallado;
+         _esNuevoEstudiante=false;
+      }
+ }
+
+ void Aceptar()
+ {
+    if (_esNuevoEstudiante)
+   {
+      AgregarEstudianteUseCase.Ejecutar(_estudiante); 
+   }
+   else
+   {
+      ModificarEstudianteUseCase.Ejecutar(_estudiante);
+   }
+
+   _estudiante = new Estudiante();
+   Navegador.NavigateTo("listadoestudiantes");
+ } 
+}

@@ -1,0 +1,142 @@
+programa Tp5Ej1_FINAL
+procesos
+  proceso juntarFlores (ES cant: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      cant:=cant+1
+  fin
+  proceso juntarPapeles (ES cant: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      cant:=cant+1
+  fin
+  proceso juntarFloresYMover(ES calleActual:numero;ES cant: numero)
+  comenzar
+    juntarFlores(cant)
+    mover
+    calleActual:=calleActual+1
+  fin
+  proceso juntarPapelesYMover (ES aveActual:numero;ES cant: numero)
+  comenzar
+    juntarPapeles(cant)
+    mover
+    aveActual:=aveActual+1
+  fin
+  proceso avanzarBloqueandoCalle(ES calleActual:numero;ES cantidad:numero)
+  comenzar
+    BloquearEsquina (PosAv,calleActual+1)
+    mover
+    juntarFlores(cantidad) 
+    calleActual:=calleActual+1
+  fin
+  proceso avanzarBloqueandoAvenida(ES aveActual:numero;ES cantidad:numero)
+  comenzar
+    BloquearEsquina (aveActual+1,PosCa)
+    mover
+    juntarPapeles(cantidad) 
+    aveActual:=aveActual+1
+  fin
+  proceso recibirIdYSumarCantEquipos(ES cantR:numero;ES cantA:numero)
+  variables
+    id,cant:numero
+  comenzar
+    RecibirMensaje (id,*)
+    si (id=2)
+      RecibirMensaje (cant,R1)
+      cantR:=cantR+cant
+    sino
+      si (id=3)
+        RecibirMensaje (cant,R2)
+        cantR:=cantR+cant
+      sino
+        si (id=98)
+          RecibirMensaje(cant,A1)
+          cantA:=cantA+cant
+        sino
+          RecibirMensaje(cant,A2)
+          cantA:=cantA+cant
+  fin
+areas
+  areaFiscalizador: AreaP (1,1,1,1)
+  areaR1: AreaPC (2,1,2,100)
+  areaR2: AreaPC (3,1,3,100)
+  areaA1: AreaPC (1,98,100,98)
+  areaA2: AreaPC (1,99,100,99)
+robots
+  robot equipoRojo_Floreros
+  variables
+    cantidad,id,avenida,calleBloq,calleActual: numero
+  comenzar
+    cantidad:=0
+    RecibirMensaje (avenida,fiscalizador)
+    id:=avenida
+    calleActual:=PosCa
+    mientras (calleActual<97) 
+      juntarFloresYMover(calleActual,cantidad)
+    juntarFlores(cantidad){avenida,97}  
+    repetir 2 
+      avanzarBloqueandoCalle(calleActual,cantidad)
+    LiberarEsquina (avenida,calleActual-1)
+    juntarFloresYMover(calleActual,cantidad)
+    LiberarEsquina (avenida,calleActual-1)
+    juntarFlores(cantidad)
+    EnviarMensaje (id,fiscalizador)
+    EnviarMensaje (cantidad,fiscalizador)
+  fin
+  robot equipoAzul_Papeleros
+  variables
+    cantidad,id,calle,aveActual: numero 
+  comenzar
+    cantidad:=0
+    RecibirMensaje (calle,fiscalizador)
+    id:=calle
+    derecha
+    juntarPapeles(cantidad)
+    repetir 2
+      avanzarBloqueandoAvenida(aveActual,cantidad)
+    LiberarEsquina(aveActual-1,calle)
+    juntarPapelesYMover(aveActual,cantidad)
+    LiberarEsquina(aveActual-1,calle)
+    mientras aveActual<97
+      juntarPapelesYMover(aveActual,cantidad)
+    juntarPapeles(cantidad)
+    EnviarMensaje(id,fiscalizador)
+    EnviarMensaje(cantidad,fiscalizador)
+  fin
+  robot tipoFiscalizador
+  variables
+    id,cantR,cantA,cant:numero
+  comenzar
+    EnviarMensaje (2,R1)
+    EnviarMensaje (3,R2)
+    EnviarMensaje (98,A1)
+    EnviarMensaje (99,A2)
+    cantR:=0
+    cantA:=0
+    repetir 4
+      recibirIdYSumarCantEquipos(cantR,cantA)
+    si (cantR>cantA)
+      Informar('Ganador_equipo_rojo_cantidad_juntada_',cantR)
+      Informar('Segundo_equipo_azul_cantidad_juntada_',cantA)
+    sino
+      Informar ('Ganador_equipo_azul_cantidad_juntada_',cantA)
+      Informar('Segundo_equipo_rojo_cantidad_juntada_',cantR)
+  fin
+variables
+  R1,R2: equipoRojo_Floreros
+  A1,A2: equipoAzul_Papeleros
+  fiscalizador: tipoFiscalizador
+comenzar
+  AsignarArea(fiscalizador,areaFiscalizador)
+  AsignarArea(R1,areaR1)
+  AsignarArea(R2,areaR2)
+  AsignarArea(A1,areaA1)
+  AsignarArea(A2,areaA2)
+  Iniciar(fiscalizador,1,1)
+  Iniciar(R1,2,1)
+  Iniciar(R2,3,1)
+  Iniciar(A1,1,98)
+  Iniciar(A2,1,99)
+fin

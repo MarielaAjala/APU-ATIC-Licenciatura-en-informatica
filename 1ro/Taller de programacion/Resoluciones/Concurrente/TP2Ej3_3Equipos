@@ -1,0 +1,125 @@
+programa TP2Ej3_Equipos_DobleRecorrido
+procesos
+  proceso juntarFlores(ES flores: numero)
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso juntarPapeles(ES papeles: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso recorridoFlores (ES flores: numero)
+  comenzar
+    flores:=0
+    repetir (9)
+      juntarFlores(flores)
+      mover
+  fin
+  proceso recorridoPapeles (ES papeles: numero)
+  comenzar
+    papeles:=0
+    repetir (9)
+      juntarPapeles(papeles)
+      mover
+  fin
+areas
+  calle1_1: AreaP (1,1,10,1) 
+  calle1_2: AreaP (11,1,20,1) 
+  calle1_3: AreaP (21,1,30,1) 
+  calle1_4: AreaP (31,1,40,1) 
+  calle5_1: AreaP (1,5,10,5)
+  calle5_2: AreaP (11,5,20,5)
+  calle5_3: AreaP (21,5,30,5)
+  calle5_4: AreaP (31,5,40,5)
+robots
+  robot juntadorFlores1
+  variables
+    cant,total:numero
+  comenzar
+    derecha 
+    si(PosAv=10)
+      recorridoFlores(cant)
+      EnviarMensaje(cant,robotB2)
+    sino
+      RecibirMensaje(total,robotB2)
+      recorridoFlores(cant)
+      total:=total+cant
+      EnviarMensaje(total,robotB4)
+  fin
+  robot juntadorFlores2
+  variables
+    cant,total:numero
+  comenzar
+    derecha
+    si(PosAv=11)
+      RecibirMensaje(cant,robotB1)
+      total:=cant
+      recorridoPapeles(cant)
+      total:=total+cant
+      EnviarMensaje(total,robotB3)
+    sino
+      RecibirMensaje(cant,robotB3)
+      total:=cant
+      recorridoPapeles(cant)
+      total:=total+cant
+    Informar(total)
+  fin
+  robot juntadorPapeles1
+  variables
+    cant,total:numero
+  comenzar
+    derecha
+    si(PosAv=10)
+      recorridoPapeles(cant)
+      EnviarMensaje(cant,robotA2)
+    sino
+      RecibirMensaje(total,robotA2)
+      recorridoPapeles(cant)
+      total:=total+cant
+      EnviarMensaje(total,robotA4)
+  fin
+  robot juntadorPapeles2
+  variables
+    cant,total:numero
+  comenzar
+    derecha
+    si(PosAv=11)
+      RecibirMensaje(cant,robotA1)
+      total:=cant
+      recorridoPapeles(cant)
+      total:=total+cant
+      EnviarMensaje(total,robotA3)
+    sino
+      RecibirMensaje(cant,robotA3)
+      total:=cant
+      recorridoPapeles(cant)
+      total:=total+cant
+    Informar(total)
+  fin
+variables
+  robotA1,robotA3:juntadorPapeles1
+  robotA2,robotA4:juntadorPapeles2
+  robotB1,robotB3:juntadorFlores1
+  robotB2,robotB4:juntadorFlores2
+comenzar
+  AsignarArea(robotA1,calle1_1)
+  AsignarArea(robotA2,calle1_2)
+  AsignarArea(robotA3,calle1_3)
+  AsignarArea(robotA4,calle1_4)
+  AsignarArea(robotB1,calle5_1)
+  AsignarArea(robotB2,calle5_2)
+  AsignarArea(robotB3,calle5_3)
+  AsignarArea(robotB4,calle5_4)
+  Iniciar(robotA1,1,1)
+  Iniciar(robotA2,11,1)
+  Iniciar(robotA3,21,1)
+  Iniciar(robotA4,31,1)
+  Iniciar(robotB1,1,5)
+  Iniciar(robotB2,11,5)
+  Iniciar(robotB3,21,5)
+  Iniciar(robotB4,31,5)
+fin

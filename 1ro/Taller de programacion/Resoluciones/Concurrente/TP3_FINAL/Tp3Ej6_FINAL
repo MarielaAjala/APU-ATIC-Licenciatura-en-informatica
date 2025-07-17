@@ -1,0 +1,185 @@
+programa Tp3Ej6_FINAL
+procesos
+  proceso enviarIds
+  comenzar
+    EnviarMensaje(1,recolectorF)
+    EnviarMensaje(2,recolectorFyP)
+    EnviarMensaje(3,recolectorP)
+  fin
+  proceso asignarFunciones
+  comenzar
+    EnviarMensaje(V,recolectorF)
+    EnviarMensaje(F,recolectorF)
+    EnviarMensaje(V,recolectorFyP)
+    EnviarMensaje(V,recolectorFyP)
+    EnviarMensaje(F,recolectorP)
+    EnviarMensaje(V,recolectorP)
+  fin
+  proceso enviarTamCuadrado
+  comenzar
+    EnviarMensaje(6,recolectorF)
+    EnviarMensaje(10,recolectorFyP)
+    EnviarMensaje(7,recolectorP)
+  fin
+  proceso enviarCoordenadas
+  comenzar
+    EnviarMensaje(2,recolectorF)
+    EnviarMensaje(5,recolectorFyP)
+    EnviarMensaje(9,recolectorP)
+  fin
+  proceso juntarFloresYOPapeles(E esFlorero: boolean;ES esPapelero:boolean)
+  comenzar
+    si esFlorero
+      mientras HayFlorEnLaEsquina
+        tomarFlor
+    si esPapelero
+      mientras HayPapelEnLaEsquina
+        tomarPapel
+  fin
+  proceso definirSigEsq(E nroLado:numero;ES av:numero;ES ca:numero)
+  comenzar
+    si nroLado=1
+      ca:=ca+1
+    sino
+      si nroLado=2
+        av:=av+1
+      sino
+        si nroLado=3
+          ca:=ca-1
+        sino
+          av:=av-1
+  fin
+  proceso cuadrado(E esFlorero:boolean;E esPapelero:boolean;E tam:numero)
+  variables
+    nextAv,nextCa,avActual,caActual,ladoNro:numero
+    bloqueado:boolean
+  comenzar 
+    ladoNro:=0
+    bloqueado:=F
+    repetir 4
+      ladoNro:=ladoNro+1
+      repetir tam
+        avActual:=PosAv
+        caActual:=PosCa
+        si (bloqueado)
+          LiberarEsquina(nextAv,nextCa)
+          bloqueado:=F
+        nextAv:=avActual
+        nextCa:=caActual
+        juntarFloresYOPapeles(esFlorero,esPapelero)
+        definirSigEsq(ladoNro,nextAv,nextCa)
+        si ((nextAv=5)&(nextCa=8))|((nextAv=8)&(nextCa=5))|((nextAv=9) & (nextCa=15))|((nextAv=15) & (nextCa=9))
+          BloquearEsquina(nextAv,nextCa)
+          bloqueado:=V
+        mover
+      derecha
+  fin
+  proceso ubicarGanador(E quien:numero)
+  comenzar
+    si quien=1
+      EnviarMensaje(20,recolectorF)
+    sino
+      si quien=2
+        EnviarMensaje(20,recolectorFyP)
+      sino
+        EnviarMensaje(20,recolectorP)
+  fin
+  proceso ubicarSegundo(E quien:numero)
+  comenzar
+    si quien=1
+      EnviarMensaje(21,recolectorF)
+    sino
+      si quien=2
+        EnviarMensaje(21,recolectorFyP)
+      sino
+        EnviarMensaje(21,recolectorP)
+  fin
+  proceso ubicarTercero(E quien:numero)
+  comenzar
+    si quien=1
+      EnviarMensaje(22,recolectorF)
+    sino
+      si quien=2
+        EnviarMensaje(22,recolectorFyP)
+      sino
+        EnviarMensaje(22,recolectorP)
+  fin
+  proceso iniciarRecorrido(E soyFlorero:boolean;E soyPapelero:boolean)
+  comenzar
+    derecha
+    si soyFlorero & soyPapelero
+      mientras HayFlorEnLaBolsa & HayPapelEnLaBolsa
+        depositarFlor
+        depositarPapel
+        mover
+    sino
+      si soyFlorero & ~soyPapelero
+        mientras HayFlorEnLaBolsa
+          depositarFlor
+          mover
+    si ~soyFlorero & soyPapelero
+      mientras HayPapelEnLaBolsa
+        depositarPapel
+        mover
+  fin
+areas
+  areaCuadrados: AreaPC (2,2,16,16)
+  areaCarrera: AreaPC (1,20,100,22)
+  areaFiscal: AreaP (1,1,1,1)
+robots
+  robot tipoRecolector
+  variables
+    quienSoy,cantCuadras,avCaInicio,calle:numero
+    soyFlorero,soyPapelero,posicionado:boolean
+  comenzar
+    RecibirMensaje (quienSoy,fiscal)
+    RecibirMensaje (soyFlorero,fiscal)
+    RecibirMensaje (soyPapelero,fiscal)
+    RecibirMensaje (cantCuadras,fiscal)
+    RecibirMensaje (avCaInicio,fiscal)
+    Pos(avCaInicio,avCaInicio)
+    cuadrado (soyFlorero,soyPapelero,cantCuadras) 
+    EnviarMensaje(quienSoy,fiscal)
+    RecibirMensaje(calle,fiscal)
+    Pos(1,calle)
+    iniciarRecorrido(soyFlorero,soyPapelero)
+  fin
+  robot tipoFiscal
+  variables
+    puesto,quien:numero
+  comenzar
+    enviarIds
+    asignarFunciones
+    enviarTamCuadrado
+    enviarCoordenadas
+    puesto:=0
+    repetir 3
+      puesto:=puesto+1
+      RecibirMensaje(quien,*)
+      si puesto=1
+        ubicarGanador(quien)
+        Informar('Ganador_',quien)
+      sino
+        si puesto=2
+          ubicarSegundo(quien)
+          Informar('Segundo_',quien)
+        sino
+          ubicarTercero(quien)
+          Informar('Ultimo_',quien)   
+  fin
+variables
+  recolectorF,recolectorFyP,recolectorP: tipoRecolector
+  fiscal: tipoFiscal
+comenzar
+  AsignarArea (recolectorF, areaCuadrados)
+  AsignarArea (recolectorF, areaCarrera)
+  AsignarArea (recolectorP, areaCuadrados)
+  AsignarArea (recolectorP, areaCarrera)
+  AsignarArea (recolectorFyP, areaCuadrados)
+  AsignarArea (recolectorFyP, areaCarrera)
+  AsignarArea (fiscal, areaFiscal)
+  Iniciar (recolectorF, 2,2)
+  Iniciar( recolectorFyP, 5,5)
+  Iniciar (recolectorP, 9,9)
+  Iniciar (fiscal, 1,1)
+fin

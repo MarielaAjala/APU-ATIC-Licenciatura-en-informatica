@@ -1,0 +1,61 @@
+programa P1Ej2
+procesos
+  proceso limpiarAvenida
+  variables
+    lado, papeles : numero
+  comenzar
+    lado := 19
+    papeles := 0
+    repetir lado
+      mientras HayPapelEnLaEsquina
+        tomarPapel
+        papeles:=papeles + 1
+      mover
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:=papeles + 1
+    Informar (papeles)
+  fin
+areas
+  areaRobot1: AreaP(10,10,10,29)
+  areaRobot2: AreaP(10,30,29,30)
+  areaRobot3: AreaP(30,11,30,30)
+  areaRobot4: AreaP (11,10,30,10)
+robots
+  robot robot_1
+  comenzar
+    limpiarAvenida
+  fin 
+  robot robot_2
+  comenzar
+    derecha
+    limpiarAvenida
+  fin 
+  robot robot_3
+  comenzar
+    repetir 2
+      derecha
+    limpiarAvenida
+  fin 
+  robot robot_4
+  comenzar
+    repetir 3
+      derecha
+    limpiarAvenida
+  fin 
+
+variables
+  robot1:robot_1
+  robot2:robot_2
+  robot3:robot_3
+  robot4:robot_4    
+comenzar
+  AsignarArea(robot1,areaRobot1)
+  AsignarArea(robot2,areaRobot2)
+  AsignarArea(robot3,areaRobot3)
+  AsignarArea(robot4,areaRobot4)
+  Iniciar(robot1,10,10)
+  Iniciar(robot2,10,30)
+  Iniciar(robot3,30,30)
+  Iniciar(robot4,30,10)
+fin

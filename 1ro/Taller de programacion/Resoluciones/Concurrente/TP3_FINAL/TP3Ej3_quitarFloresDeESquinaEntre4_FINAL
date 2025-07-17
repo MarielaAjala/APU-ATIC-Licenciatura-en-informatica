@@ -1,0 +1,168 @@
+programa TP3Ej3_quitarFloresDeESquinaEntre4_FINAL
+procesos
+  proceso enviarIds
+  comenzar
+    EnviarMensaje (1,robot1)
+    EnviarMensaje (2,robot2)
+    EnviarMensaje (3,robot3)
+    EnviarMensaje (4,robot4)
+  fin
+  proceso notificarEsquina(E avenida:numero;E calle:numero)
+  comenzar
+    EnviarMensaje (avenida,robot1)
+    EnviarMensaje (avenida,robot2)
+    EnviarMensaje (avenida,robot3)
+    EnviarMensaje (avenida,robot4)
+    EnviarMensaje (calle,robot1)
+    EnviarMensaje (calle,robot2)
+    EnviarMensaje (calle,robot3)
+    EnviarMensaje (calle,robot4)
+  fin
+  proceso colaborar (ES hay: boolean; E avenida: numero; E calle: numero;E aveOrigen: numero; E calleOrigen: numero)
+  comenzar
+    BloquearEsquina (avenida,calle)
+    Pos (avenida,calle)
+    si HayFlorEnLaEsquina
+      tomarFlor
+      hay:= V
+    sino
+      hay:=F
+    Pos (aveOrigen,calleOrigen)
+    LiberarEsquina (avenida,calle)
+  fin
+  proceso sumar(E quien:numero;ES cant1:numero;ES cant2:numero;ES cant3:numero;ES cant4:numero)
+  comenzar
+    si (quien = 1)
+      cant1:=cant1+1
+    sino
+      si (quien = 2)
+        cant2:=cant2+1
+      sino
+        si (quien=3)
+          cant3:=cant3+1
+        sino
+          cant4:=cant4+1
+  fin
+  proceso maximo(ES maximo:numero;E cant1:numero;E cant2:numero;E cant3:numero;E cant4:numero)
+  variables
+    cantWiners:numero
+  comenzar
+    maximo:=-1
+    cantWiners:=0
+    si (cant1>maximo)
+      maximo:=cant1
+    si (cant2>maximo)
+      maximo:=cant2
+    si (cant3>maximo)
+      maximo:=cant3
+    si(cant4>maximo)
+      maximo:=cant4
+    si (cant1=maximo)
+      cantWiners:=cantWiners+1      
+    si (cant2=maximo)
+      cantWiners:=cantWiners+1      
+    si (cant3=maximo)
+      cantWiners:=cantWiners+1     
+    si (cant4=maximo)
+      cantWiners:=cantWiners+1    
+    EnviarMensaje(cantWiners,robot1)
+    EnviarMensaje(cantWiners,robot2)
+    EnviarMensaje(cantWiners,robot3)
+    EnviarMensaje(cantWiners,robot4) 
+    si (cantWiners=4)
+      Informar('Todos_empataron_',V)  
+    sino
+      si (cantWiners>1)
+        Informar('Hay_mas_de_un_ganador_',cantWiners)
+        si (cant1=maximo)
+          EnviarMensaje(V,robot1)
+        sino
+          EnviarMensaje(F,robot1)
+        si (cant2=maximo)
+          EnviarMensaje(V,robot2)
+        sino
+          EnviarMensaje(F,robot2)
+        si (cant3=maximo)
+          EnviarMensaje(V,robot3)
+        sino
+          EnviarMensaje(F,robot3) 
+        si (cant4=maximo)
+          EnviarMensaje(V,robot4)
+        sino
+          EnviarMensaje(F,robot4) 
+  fin
+  proceso elegirGanador(ES ganador:numero;E cant1:numero;E cant2:numero;E cant3:numero;E cant4:numero)
+  variables
+    maximo:numero
+  comenzar
+    maximo(maximo,cant1,cant2,cant3,cant4)     
+  fin
+areas
+  areaCompetencia: AreaPC (2,2,10,10)
+  areaJefe: AreaP (1,1,1,1)
+  areaRobot1: AreaP (2,1,2,1)
+  areaRobot2: AreaP (3,1,3,1)
+  areaRobot3: AreaP (4,1,4,1)
+  areaRobot4: AreaP (5,1,5,1)
+robots
+  robot tipoCompetidor
+  variables
+    f,quienSoy,calle,avenida,aveOrigen,calleOrigen,cantGanadores: numero
+    continuaCompetencia,hayFlor,soyGanador: boolean
+  comenzar
+    aveOrigen:= PosAv
+    calleOrigen:= PosCa
+    RecibirMensaje (quienSoy,jefe)
+    RecibirMensaje (avenida,jefe)
+    RecibirMensaje (calle,jefe)   
+    colaborar (hayFlor,avenida,calle,aveOrigen,calleOrigen)
+    EnviarMensaje(hayFlor,jefe)   
+    mientras (hayFlor)   
+      EnviarMensaje(quienSoy, jefe)
+      colaborar (hayFlor,avenida,calle,aveOrigen,calleOrigen)
+      EnviarMensaje(hayFlor,jefe)
+    RecibirMensaje(cantGanadores,jefe)
+    si(cantGanadores<4)
+      RecibirMensaje(soyGanador,jefe)
+      si(soyGanador)
+        Informar('Soy_ganador',V)
+  fin
+  robot tipoJefe
+  variables
+    cant1,cant2,cant3,cant4,avenida,calle,quien,ganador:numero
+    hayFlor: boolean
+  comenzar
+    cant1:=0
+    cant2:=0
+    cant3:=0
+    cant4:=0
+    Random (avenida,2,10)
+    Random (calle,2,10)
+    enviarIds
+    notificarEsquina(avenida,calle)
+    RecibirMensaje (hayFlor,*)
+    mientras (hayFlor)  
+      RecibirMensaje (quien,*)
+      sumar(quien,cant1,cant2,cant3,cant4)
+      RecibirMensaje (hayFlor,*)
+    elegirGanador(ganador,cant1,cant2,cant3,cant4)
+  fin
+variables
+  robot1,robot2,robot3,robot4: tipoCompetidor
+  jefe: tipoJefe
+comenzar
+  AsignarArea (robot1,areaCompetencia )
+  AsignarArea (robot2, areaCompetencia)
+  AsignarArea (robot3, areaCompetencia)
+  AsignarArea (robot4, areaCompetencia)
+  AsignarArea (robot1, areaRobot1)
+  AsignarArea (robot2, areaRobot2)
+  AsignarArea (robot3, areaRobot3)
+  AsignarArea (robot4, areaRobot4)
+  AsignarArea (jefe, areaJefe)
+  Iniciar (jefe, 1,1 )
+  Iniciar (robot1, 2,1 )
+  Iniciar (robot2, 3,1 )
+  Iniciar (robot3, 4,1 )
+  Iniciar (robot4, 5,1 )
+fin
